@@ -1,16 +1,16 @@
-import { createClient } from '@supabase/supabase-js'
-import 'server-only'
+import { createClient } from '@supabase/supabase-js';
+import 'server-only';
 
 // Validate required environment variables
-const requiredEnvVars = [
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'SUPABASE_SERVICE_ROLE_KEY',
-];
+const requiredEnvVars = ['NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
 
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
-  console.error('Missing required Supabase Admin environment variables:', missingEnvVars.join(', '));
+  console.error(
+    'Missing required Supabase Admin environment variables:',
+    missingEnvVars.join(', ')
+  );
   throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
 }
 
@@ -21,8 +21,8 @@ export const supabaseAdmin = createClient(
   {
     auth: {
       autoRefreshToken: false,
-      persistSession: false
-    }
+      persistSession: false,
+    },
   }
 );
 

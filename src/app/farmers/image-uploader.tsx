@@ -57,7 +57,7 @@ export function ImageUploader({ onUploadsUpdate, maxFiles = 5 }: ImageUploaderPr
           // TODO: Replace with Supabase storage upload
           const userId = (user as any)?.id || (user as any)?.uid || 'anonymous';
           const storagePath = `produce-images/${userId}/${Date.now()}-${compressedFile.name}`;
-          
+
           // Placeholder for successful upload
           const downloadURL = `https://placeholder.supabase.co/storage/v1/object/public/listing-images/${storagePath}`;
 

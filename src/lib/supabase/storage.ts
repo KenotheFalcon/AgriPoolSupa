@@ -10,12 +10,10 @@ export interface UploadOptions {
 
 export const uploadFile = async ({ bucket, path, file, upsert = true }: UploadOptions) => {
   try {
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(path, file, {
-        cacheControl: '3600',
-        upsert,
-      });
+    const { data, error } = await supabase.storage.from(bucket).upload(path, file, {
+      cacheControl: '3600',
+      upsert,
+    });
 
     if (error) {
       console.error('Upload error:', error);
@@ -23,17 +21,15 @@ export const uploadFile = async ({ bucket, path, file, upsert = true }: UploadOp
     }
 
     // Get public URL
-    const { data: urlData } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(path);
+    const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(path);
 
-    return { 
-      data: { 
+    return {
+      data: {
         path: data.path,
         fullPath: data.fullPath,
-        url: urlData.publicUrl 
-      }, 
-      error: null 
+        url: urlData.publicUrl,
+      },
+      error: null,
     };
   } catch (error: any) {
     console.error('Upload error:', error);
@@ -43,9 +39,7 @@ export const uploadFile = async ({ bucket, path, file, upsert = true }: UploadOp
 
 export const deleteFile = async (bucket: string, path: string) => {
   try {
-    const { error } = await supabase.storage
-      .from(bucket)
-      .remove([path]);
+    const { error } = await supabase.storage.from(bucket).remove([path]);
 
     if (error) {
       console.error('Delete error:', error);
@@ -60,18 +54,14 @@ export const deleteFile = async (bucket: string, path: string) => {
 };
 
 export const getFileUrl = (bucket: string, path: string) => {
-  const { data } = supabase.storage
-    .from(bucket)
-    .getPublicUrl(path);
-  
+  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+
   return data.publicUrl;
 };
 
 export const listFiles = async (bucket: string, folder?: string) => {
   try {
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .list(folder);
+    const { data, error } = await supabase.storage.from(bucket).list(folder);
 
     if (error) {
       console.error('List files error:', error);
@@ -88,8 +78,7 @@ export const listFiles = async (bucket: string, folder?: string) => {
 // Create storage buckets (for admin use)
 export const createBucket = async (bucketName: string, options?: any) => {
   try {
-    const { data, error } = await supabaseAdmin.storage
-      .createBucket(bucketName, options);
+    const { data, error } = await supabaseAdmin.storage.createBucket(bucketName, options);
 
     if (error) {
       console.error('Create bucket error:', error);

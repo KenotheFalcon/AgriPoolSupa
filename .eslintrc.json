@@ -4,7 +4,16 @@
   "rules": {
     "prettier/prettier": "warn",
     "no-unused-vars": "warn",
-    "no-console": "warn",
-    "@next/next/no-img-element": "off"
-  }
+    "no-console": "off",
+    "@next/next/no-img-element": "off",
+    "react/no-unescaped-entities": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.{js,jsx,ts,tsx}", "**/__tests__/**/*"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }

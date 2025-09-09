@@ -1,12 +1,21 @@
-import { getAdminFirestore } from '@/lib/firebase-admin';
+import { createClient } from '@/lib/supabase/server';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ChecklistManager } from './checklist-manager';
 
 async function getChecklist() {
-  const db = await getAdminFirestore();
-  const doc = await db.collection('agripoolConfig').doc('verificationChecklist').get();
-  if (!doc.exists) return [];
-  return doc.data()?.items || [];
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('config')
+    .select('value')
+    .eq('key', 'verification_checklist')
+    .single();
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data.value?.items || [];
 }
 
 export default async function AdminVerificationPage() {
@@ -17,7 +26,8 @@ export default async function AdminVerificationPage() {
       <CardHeader>
         <CardTitle>Manage Verification Checklist</CardTitle>
         <CardDescription>
-          Add or remove the requirements farmers must meet to become a "Verified Farmer".
+          Add or remove the requirements farmers must meet to become a &ldquo;Verified
+          Farmer&rdquo;.
         </CardDescription>
       </CardHeader>
       <CardContent>

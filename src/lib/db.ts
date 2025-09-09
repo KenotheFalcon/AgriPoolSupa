@@ -6,7 +6,11 @@ type Profile = Database['public']['Tables']['profiles']['Row'];
 type ProfileInsert = Database['public']['Tables']['profiles']['Insert'];
 type ProfileUpdate = Database['public']['Tables']['profiles']['Update'];
 
-export async function createUserProfile(uid: string, email: string, displayName?: string): Promise<Profile | null> {
+export async function createUserProfile(
+  uid: string,
+  email: string,
+  displayName?: string
+): Promise<Profile | null> {
   try {
     const { data, error } = await supabaseAdmin
       .from('profiles')
@@ -36,11 +40,7 @@ export async function createUserProfile(uid: string, email: string, displayName?
 
 export async function getUserProfile(uid: string): Promise<Profile | null> {
   try {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', uid)
-      .single();
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', uid).single();
 
     if (error) {
       console.error('Error getting user profile:', error);
@@ -54,7 +54,10 @@ export async function getUserProfile(uid: string): Promise<Profile | null> {
   }
 }
 
-export async function updateUserProfile(uid: string, updateData: Partial<ProfileUpdate>): Promise<Profile | null> {
+export async function updateUserProfile(
+  uid: string,
+  updateData: Partial<ProfileUpdate>
+): Promise<Profile | null> {
   try {
     const { data, error } = await supabase
       .from('profiles')
