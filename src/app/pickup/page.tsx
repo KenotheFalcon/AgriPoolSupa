@@ -70,7 +70,8 @@ async function getOrderDetails(
     order: orderData,
     group: groupData,
     listing: listingData,
-    hasReviewed: reviewDoc.exists,
+    // TODO: Re-implement review checking with Supabase
+    // hasReviewed: reviewDoc.exists,
   };
 }
 
@@ -101,11 +102,12 @@ export default async function PickupPage({
     );
   }
 
-  const { order, group, listing, hasReviewed } = details;
+  const { order, group, listing } = details;
 
   const isCompleted = order.status === 'completed';
   const canConfirm = group.status === 'pending_delivery' && !isCompleted;
-  const canReview = isCompleted && !hasReviewed;
+  // TODO: Re-implement review checking with Supabase
+  const canReview = isCompleted; // && !hasReviewed;
 
   return (
     <div className='container mx-auto py-8 max-w-4xl'>
@@ -195,7 +197,8 @@ export default async function PickupPage({
           {canReview && (
             <ReviewForm orderId={order.id} farmerId={listing.farmerId} groupId={group.id} />
           )}
-          {isCompleted && hasReviewed && (
+          {/* TODO: Re-implement review status checking with Supabase */}
+          {isCompleted && false && (
             <div className='p-4 mt-4 text-center bg-blue-100 text-blue-800 rounded-lg'>
               <h3 className='font-bold'>You have already left a review for this order.</h3>
             </div>

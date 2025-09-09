@@ -44,7 +44,8 @@ export function ReviewForm({
   farmerId: string;
   groupId: string;
 }) {
-  const [state, formAction] = useFormState(submitReview, initialState as any);
+  // TODO: Fix useFormState integration according to latest React patterns
+  const [state] = useState(initialState as any);
   const { toast } = useToast();
   const [rating, setRating] = useState(0);
 
@@ -57,7 +58,8 @@ export function ReviewForm({
     }
   }, [state, toast]);
 
-  const handleFormAction = (formData: FormData) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (rating === 0) {
       toast({
         title: 'Error',
@@ -66,14 +68,22 @@ export function ReviewForm({
       });
       return;
     }
+    const formData = new FormData(event.currentTarget);
     formData.append('rating', rating.toString());
-    formAction(formData);
+    
+    try {
+      await submitReview(formData);
+      toast({ title: 'Success', description: 'Review submitted successfully' });
+      // Reset form or redirect as needed
+    } catch (error) {
+      toast({ title: 'Error', description: 'Failed to submit review', variant: 'destructive' });
+    }
   };
 
   return (
     <div className='p-4 border-t'>
       <h3 className='font-bold text-lg mb-4'>Leave a Review</h3>
-      <form action={handleFormAction} className='space-y-4'>
+      <form onSubmit={handleSubmit} className='space-y-4'>
         <input type='hidden' name='orderId' value={orderId} />
         <input type='hidden' name='farmerId' value={farmerId} />
         <input type='hidden' name='groupId' value={groupId} />

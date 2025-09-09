@@ -17,7 +17,7 @@ export default async function AdminVerificationPage() {
       <CardHeader>
         <CardTitle>Manage Verification Checklist</CardTitle>
         <CardDescription>
-          Add or remove the requirements farmers must meet to become a "Verified Farmer".
+          Add or remove the requirements farmers must meet to become a &quot;Verified Farmer&quot;.
         </CardDescription>
       </CardHeader>
       <CardContent>

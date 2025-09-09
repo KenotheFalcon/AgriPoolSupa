@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 export interface ServerUser {
   uid: string;
   email: string | null;
-  role: 'buyer' | 'farmer';
+  role: 'buyer' | 'farmer' | 'support' | 'admin';
   emailVerified: boolean;
   displayName: string | null;
 }
@@ -27,8 +27,8 @@ export async function getServerUser(): Promise<ServerUser | null> {
 
     return {
       uid: decodedToken.uid,
-      email: decodedToken.email,
-      role: decodedToken.role as 'buyer' | 'farmer',
+      email: decodedToken.email || null,
+      role: decodedToken.role as 'buyer' | 'farmer' | 'support' | 'admin',
       emailVerified: decodedToken.email_verified || false,
       displayName: decodedToken.name || null,
     };
@@ -55,7 +55,7 @@ export async function requireAuth(): Promise<ServerUser> {
 /**
  * Require specific role - redirects to signin if user doesn't have the required role
  */
-export async function requireRole(requiredRole: 'buyer' | 'farmer'): Promise<ServerUser> {
+export async function requireRole(requiredRole: 'buyer' | 'farmer' | 'support' | 'admin'): Promise<ServerUser> {
   const user = await requireAuth();
 
   if (user.role !== requiredRole) {
@@ -67,17 +67,20 @@ export async function requireRole(requiredRole: 'buyer' | 'farmer'): Promise<Ser
 
 /**
  * Get user data from Firestore (server-side)
+ * TODO: Migrate to Supabase according to PRD
  */
 export async function getServerUserData(uid: string) {
   try {
-    const db = await getAdminFirestore();
-    const userDoc = await db.collection('users').doc(uid).get();
-
-    if (!userDoc.exists) {
-      return null;
-    }
-
-    return userDoc.data();
+    // TODO: Replace with Supabase implementation
+    // const db = await getAdminFirestore();
+    // const userDoc = await db.collection('users').doc(uid).get();
+    //
+    // if (!userDoc.exists) {
+    //   return null;
+    // }
+    //
+    // return userDoc.data();
+    return null; // Placeholder until Supabase migration
   } catch (error) {
     console.error('Error getting user data:', error);
     return null;

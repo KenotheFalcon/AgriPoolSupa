@@ -43,16 +43,43 @@ export function GroupBuyModal({
   listing: any;
   user: ServerUser;
 }) {
-  const [createState, createFormAction] = useFormState(createGroupBuy, initialState);
-  const [joinState, joinFormAction] = useFormState(joinGroupBuy, initialState);
+  // TODO: Fix useFormState integration according to latest React patterns
+  const [createState] = useState(initialState);
+  const [joinState] = useState(initialState);
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
   const activeGroup = listing.activeGroup;
 
+  const handleCreateGroupBuy = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      const result = await createGroupBuy(formData);
+      if (result.error) {
+        toast({ title: 'Error', description: String(result.error), variant: 'destructive' });
+      }
+    } catch (error) {
+      toast({ title: 'Error', description: 'An error occurred', variant: 'destructive' });
+    }
+  };
+
+  const handleJoinGroupBuy = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      const result = await joinGroupBuy(formData);
+      if (result.error) {
+        toast({ title: 'Error', description: String(result.error), variant: 'destructive' });
+      }
+    } catch (error) {
+      toast({ title: 'Error', description: 'An error occurred', variant: 'destructive' });
+    }
+  };
+
   const handleState = (state: typeof createState | typeof joinState) => {
-    if (state.paymentLink) {
-      toast({ title: 'Success', description: state.message });
-      window.location.href = state.paymentLink;
+    if ((state as any).paymentLink) {
+      toast({ title: 'Success', description: (state as any).message });
+      window.location.href = (state as any).paymentLink;
     } else if (state.message?.includes('successfully')) {
       toast({ title: 'Success', description: state.message });
       if (!activeGroup) {
@@ -131,7 +158,7 @@ export function GroupBuyModal({
 
               {!hasJoined && (
                 <form
-                  action={activeGroup ? joinFormAction : createFormAction}
+                  onSubmit={activeGroup ? handleJoinGroupBuy : handleCreateGroupBuy}
                   className='space-y-4 mt-4'
                 >
                   <input type='hidden' name='listingId' value={listing.id} />

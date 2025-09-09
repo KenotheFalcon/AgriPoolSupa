@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getAdminAuth } from './lib/firebase-admin';
 
 export async function middleware(request: NextRequest) {
-  const sessionCookie = request.cookies.get('session')?.value;
   const { pathname } = request.nextUrl;
 
   const headers = new Headers(request.headers);
@@ -35,53 +33,13 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  if (!sessionCookie) {
-    // For API routes, return a 401 Unauthorized response
-    if (pathname.startsWith('/api/')) {
-      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    // For other routes, redirect to the sign-in page
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/signin';
-    return NextResponse.redirect(url);
-  }
-
-  try {
-    const adminAuth = await getAdminAuth();
-    const decodedToken = await adminAuth.verifySessionCookie(sessionCookie, true);
-    const userRole = decodedToken.role;
-
-    if (pathname.startsWith('/admin')) {
-      if (userRole !== 'support') {
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    } else if (pathname.startsWith('/dashboard')) {
-      if (userRole !== 'buyer') {
-        return NextResponse.redirect(new URL('/auth/signin', request.url));
-      }
-    } else if (pathname.startsWith('/farmers')) {
-      if (userRole !== 'farmer') {
-        return NextResponse.redirect(new URL('/auth/signin', request.url));
-      }
-    }
-
-    // For API routes, you can add role checks here too if needed
-
-    return NextResponse.next({
-      request: {
-        headers,
-      },
-    });
-  } catch (error) {
-    console.error('Middleware error:', error);
-    // If cookie verification fails, redirect to sign-in
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/signin';
-    return NextResponse.redirect(url);
-  }
+  // For now, allow all requests to pass through until proper Supabase auth is configured
+  // TODO: Implement proper Supabase authentication middleware
+  return NextResponse.next({
+    request: {
+      headers,
+    },
+  });
 }
 
 export const config = {

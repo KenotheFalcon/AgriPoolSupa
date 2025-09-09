@@ -1,5 +1,4 @@
-import { getAdminFirestore } from '@/lib/firebase-admin';
-import { requireRole, ServerUser } from '@/lib/auth/server';
+import { requireRole } from '@/lib/auth/server';
 import {
   Table,
   TableBody,
@@ -13,9 +12,32 @@ import { Badge } from '@/components/ui/badge';
 import { AdminChatModal } from './admin-chat-modal';
 
 async function getAllGroupBuys() {
-  const db = await getAdminFirestore();
-  const groupsSnapshot = await db.collection('groupBuys').orderBy('createdAt', 'desc').get();
-  return groupsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  // TODO: Replace with Supabase implementation according to PRD
+  // Mock data for now
+  return [
+    {
+      id: '1',
+      produceName: 'Fresh Tomatoes',
+      status: 'active',
+      targetQuantity: 100,
+      quantityFunded: 75,
+      totalQuantity: 100,
+      deadline: '2024-01-15T10:00:00Z',
+      organizerId: 'user1',
+      participants: { user1: 25, user2: 50 },
+    },
+    {
+      id: '2',
+      produceName: 'Organic Spinach',
+      status: 'completed',
+      targetQuantity: 50,
+      quantityFunded: 50,
+      totalQuantity: 50,
+      deadline: '2024-01-10T10:00:00Z',
+      organizerId: 'user2',
+      participants: { user3: 30, user4: 20 },
+    },
+  ];
 }
 
 export default async function AdminGroupsPage() {

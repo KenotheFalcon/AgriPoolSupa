@@ -36,9 +36,23 @@ function SubmitButton() {
 
 export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [formState, formAction] = useFormState(sendMessage, initialState);
+  // TODO: Fix useFormState integration according to latest React patterns
+  // const [formState, formAction] = useFormState(sendMessage, initialState);
+  const [formState] = useState(initialState);
   const formRef = useRef<HTMLFormElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // TODO: Implement proper form submission
+    const formData = new FormData(event.currentTarget);
+    try {
+      await sendMessage(formData);
+      event.currentTarget.reset();
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  };
 
   useEffect(() => {
     const q = query(collection(db, 'groupBuys', groupId, 'messages'), orderBy('timestamp', 'asc'));
@@ -110,7 +124,7 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
         </div>
       </ScrollArea>
       <div className='p-4 border-t'>
-        <form ref={formRef} action={formAction} className='flex gap-2 items-center'>
+        <form ref={formRef} onSubmit={handleSubmit} className='flex gap-2 items-center'>
           <input type='hidden' name='groupId' value={groupId} />
           <Input
             name='message'
@@ -122,7 +136,7 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
             onRecordingComplete={(blob) => {
               const formData = new FormData(formRef.current!);
               formData.append('audio', blob, 'voice-message.webm');
-              formAction(formData);
+              handleSubmit({ preventDefault: () => {}, currentTarget: formRef.current! } as any);
             }}
           />
           <SubmitButton />

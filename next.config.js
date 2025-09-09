@@ -8,6 +8,20 @@ const withPWA = require('next-pwa')({
 const path = require('path');
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if your project has ESLint errors.
+    ignoreDuringBuilds: false,
+  },
+  typescript: {
+    // Warning: This allows production builds to successfully complete even if your project has type errors.
+    ignoreBuildErrors: false,
+  },
+  images: {
+    domains: ['localhost'],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+};
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

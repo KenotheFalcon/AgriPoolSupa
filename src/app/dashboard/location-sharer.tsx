@@ -25,10 +25,13 @@ export function LocationSharer({ user }: { user: ServerUser }) {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        const result = await updateUserLocation({ latitude, longitude });
+        const formData = new FormData();
+        formData.append('latitude', latitude.toString());
+        formData.append('longitude', longitude.toString());
+        const result = await updateUserLocation(formData);
 
-        if (result.message) {
-          toast({ title: 'Success', description: result.message });
+        if ((result as any).message) {
+          toast({ title: 'Success', description: (result as any).message });
         } else if (result.error) {
           toast({ title: 'Error', description: result.error, variant: 'destructive' });
         }

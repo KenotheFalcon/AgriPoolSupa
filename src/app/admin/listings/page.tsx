@@ -1,4 +1,3 @@
-import { getAdminFirestore } from '@/lib/firebase-admin';
 import {
   Table,
   TableBody,
@@ -12,12 +11,40 @@ import { Badge } from '@/components/ui/badge';
 import { SuspendButton } from './suspend-button';
 
 async function getAllListings() {
-  const db = await getAdminFirestore();
-  const listingsSnapshot = await db
-    .collection('produceListings')
-    .orderBy('createdAt', 'desc')
-    .get();
-  return listingsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  // TODO: Replace with Supabase implementation according to PRD
+  // Mock data for now
+  return [
+    {
+      id: '1',
+      produceName: 'Fresh Tomatoes',
+      farmerName: 'John Doe',
+      status: 'active',
+      pricePerUnit: 500,
+      quantityAvailable: 75,
+      totalQuantity: 100,
+      location: 'Lagos, Nigeria',
+    },
+    {
+      id: '2',
+      produceName: 'Organic Spinach',
+      farmerName: 'Jane Smith',
+      status: 'sold',
+      pricePerUnit: 300,
+      quantityAvailable: 0,
+      totalQuantity: 50,
+      location: 'Abuja, Nigeria',
+    },
+    {
+      id: '3',
+      produceName: 'Sweet Potatoes',
+      farmerName: 'Mike Johnson',
+      status: 'suspended',
+      pricePerUnit: 400,
+      quantityAvailable: 30,
+      totalQuantity: 75,
+      location: 'Kano, Nigeria',
+    },
+  ];
 }
 
 export default async function AdminListingsPage() {

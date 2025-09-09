@@ -1,0 +1,159 @@
+'use client';
+
+import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useState, useRef } from 'react';
+import { createProduceListing } from './actions';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ImageUploader } from './image-uploader';
+import DynamicMapPicker from './dynamic-map-picker';
+
+const initialState = {
+  message: '',
+  errors: {},
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type='submit' disabled={pending} className='w-full'>
+      {pending ? 'Posting...' : 'Post Listing'}
+    </Button>
+  );
+}
+
+export function PostProduceForm() {
+  // TODO: Fix useFormState integration according to latest React patterns
+  const [state] = useState(initialState);
+  const { toast } = useToast();
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [location, setLocation] = useState<{ lat: number; lng: number; address: string } | null>(
+    null
+  );
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    try {
+      const result = await createProduceListing(formData);
+      if (result.errors) {
+        toast({ title: 'Error', description: 'Please check the form for errors', variant: 'destructive' });
+      } else if (result.message) {
+        toast({ title: 'Success', description: result.message });
+        event.currentTarget.reset();
+      }
+    } catch (error) {
+      toast({ title: 'Error', description: 'An error occurred', variant: 'destructive' });
+    }
+  };
+
+  useEffect(() => {
+    if (state.message.includes('successfully')) {
+      toast({
+        title: 'Success',
+        description: state.message,
+      });
+      formRef.current?.reset();
+      setImageUrls([]);
+      setLocation(null);
+    } else if (state.message) {
+      toast({
+        title: 'Error',
+        description: state.message,
+        variant: 'destructive',
+      });
+    }
+  }, [state, toast]);
+
+  const handleFormAction = (formData: FormData) => {
+    imageUrls.forEach((url) => {
+      formData.append('imageUrls', url);
+    });
+    if (location) {
+      formData.append('pickupLocation', location.address);
+      formData.append('latitude', location.lat.toString());
+      formData.append('longitude', location.lng.toString());
+    }
+    formAction(formData);
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Create a New Produce Listing</CardTitle>
+        <CardDescription>Fill out the form below to list your produce on AgriPool.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form ref={formRef} action={handleFormAction} className='space-y-6'>
+          <div className='space-y-2'>
+            <Label htmlFor='image'>Produce Images (up to 5)</Label>
+            <ImageUploader onUploadsUpdate={setImageUrls} />
+          </div>
+          <div className='space-y-2'>
+            <Label htmlFor='location'>Pickup Location</Label>
+            <DynamicMapPicker onLocationSelect={setLocation} />
+            {state.errors?.pickupLocation && (
+              <p className='text-sm text-red-500'>{state.errors.pickupLocation}</p>
+            )}
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='produceName'>Produce Name</Label>
+              <Input id='produceName' name='produceName' placeholder='e.g., Tomatoes' />
+              {state.errors?.produceName && (
+                <p className='text-sm text-red-500'>{state.errors.produceName}</p>
+              )}
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='pricePerUnit'>Price per Unit (₦)</Label>
+              <Input id='pricePerUnit' name='pricePerUnit' type='number' placeholder='e.g., 5000' />
+              {state.errors?.pricePerUnit && (
+                <p className='text-sm text-red-500'>{state.errors.pricePerUnit}</p>
+              )}
+            </div>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='unitDescription'>Unit Description</Label>
+              <Input id='unitDescription' name='unitDescription' placeholder='e.g., 50kg bag' />
+              {state.errors?.unitDescription && (
+                <p className='text-sm text-red-500'>{state.errors.unitDescription}</p>
+              )}
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='totalQuantity'>Total Quantity (units)</Label>
+              <Input id='totalQuantity' name='totalQuantity' type='number' placeholder='e.g., 20' />
+              {state.errors?.totalQuantity && (
+                <p className='text-sm text-red-500'>{state.errors.totalQuantity}</p>
+              )}
+            </div>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='deliveryDate'>Delivery Date</Label>
+              <Input id='deliveryDate' name='deliveryDate' type='date' />
+              {state.errors?.deliveryDate && (
+                <p className='text-sm text-red-500'>{state.errors.deliveryDate}</p>
+              )}
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='pickupLocation'>Pickup Location</Label>
+              <Input id='pickupLocation' name='pickupLocation' placeholder='e.g., Ikeja, Lagos' />
+              {state.errors?.pickupLocation && (
+                <p className='text-sm text-red-500'>{state.errors.pickupLocation}</p>
+              )}
+            </div>
+          </div>
+          <SubmitButton />
+          {state.message && !state.message.includes('successfully') && (
+            <p className='text-sm text-red-500 mt-2 text-center'>{state.message}</p>
+          )}
+        </form>
+      </CardContent>
+    </Card>
+  );
+}
