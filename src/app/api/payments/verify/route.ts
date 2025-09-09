@@ -60,7 +60,7 @@ export async function GET(request: Request) {
         const groupDoc = await transaction.get(groupRef);
         const groupData = groupDoc.data();
 
-        if (groupData && groupData.quantityFunded >= groupData.totalQuantity) {
+        if (groupData.quantityFunded >= groupData.totalQuantity) {
           transaction.update(groupRef, { status: 'pending_delivery' });
           transaction.update(listingRef, { status: 'pending_delivery' });
           const notificationRef = db.collection('notifications').doc();

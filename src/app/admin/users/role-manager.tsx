@@ -32,7 +32,7 @@ export function RoleManager({
     formData.append('newRole', newRole);
 
     startTransition(async () => {
-      const result = await setUserRole(null, formData);
+      const result = await setUserRole(formData);
       if (result.message) {
         toast({ title: 'Success', description: result.message });
       } else if (result.error) {

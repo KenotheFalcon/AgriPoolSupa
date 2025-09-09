@@ -31,7 +31,7 @@ export function SuspendButton({
     formData.append('listingId', listingId);
 
     startTransition(async () => {
-      const result = await suspendListing(null, formData);
+      const result = await suspendListing(formData);
       if (result.message) {
         toast({ title: 'Success', description: result.message });
       } else if (result.error) {

@@ -26,7 +26,7 @@ async function handlePaymentAndOrder(
   quantity: number,
   groupId: string
 ) {
-  const db = await getAdminFirestore();
+  const db = getAdminFirestore();
   const orderRef = db.collection('orders').doc();
   const flutterwave = createFlutterwaveClient(process.env.FLUTTERWAVE_SECRET_KEY!);
 
@@ -63,13 +63,13 @@ async function handlePaymentAndOrder(
     status: 'pending_payment',
     createdAt: FieldValue.serverTimestamp(),
     paymentLink: paymentResponse.data.link,
-    tx_ref: (paymentResponse as any).tx_ref,
+    tx_ref: paymentResponse.tx_ref,
   });
 
   return paymentResponse.data.link;
 }
 
-export async function createGroupBuy(prevState: any, formData: FormData) {
+export async function createGroupBuy(formData: FormData) {
   try {
     const user = await requireRole('buyer');
     const db = await getAdminFirestore();
@@ -94,7 +94,7 @@ export async function createGroupBuy(prevState: any, formData: FormData) {
 
       if (!listingDoc.exists) throw new Error('Produce listing not found.');
 
-      const listingData = { id: listingDoc.id, ...listingDoc.data()! } as any;
+      const listingData = { id: listingDoc.id, ...listingDoc.data()! };
       if (listingData.status !== 'available')
         throw new Error('This listing is no longer available.');
       if (quantity > listingData.quantityAvailable)
@@ -156,7 +156,7 @@ export async function createGroupBuy(prevState: any, formData: FormData) {
   }
 }
 
-export async function joinGroupBuy(prevState: any, formData: FormData) {
+export async function joinGroupBuy(formData: FormData) {
   try {
     const user = await requireRole('buyer');
     const db = await getAdminFirestore();
@@ -186,7 +186,7 @@ export async function joinGroupBuy(prevState: any, formData: FormData) {
       if (!listingDoc.exists) throw new Error('Produce listing not found.');
 
       const groupData = groupDoc.data()!;
-      const listingData = { id: listingDoc.id, ...listingDoc.data()! } as any;
+      const listingData = { id: listingDoc.id, ...listingDoc.data()! };
 
       if (groupData.status !== 'funding') throw new Error('This group buy is no longer active.');
       if (listingData.quantityAvailable < quantity)
