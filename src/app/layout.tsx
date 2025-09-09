@@ -7,6 +7,8 @@ import Navbar from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { AuthProvider } from '@/hooks/auth-provider';
 import { NotificationOptIn } from '@/app/notifications/opt-in';
+import { ErrorBoundary } from '@/components/error-boundary';
+import { PerformanceMonitor } from '@/components/performance-monitor';
 import { cn } from '@/lib/utils';
 import { ServiceWorkerRegistrar } from '@/components/providers/service-worker-registrar';
 
@@ -84,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
+            <PerformanceMonitor />
             <ServiceWorkerRegistrar />
             <div className='relative flex min-h-screen flex-col'>
               <a 
@@ -93,9 +96,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Skip to main content
               </a>
               <Navbar />
-              <main id='main-content' className='flex-1' tabIndex={-1}>
-                {children}
-              </main>
+              <ErrorBoundary>
+                <main id='main-content' className='flex-1' tabIndex={-1}>
+                  {children}
+                </main>
+              </ErrorBoundary>
               <div className='fixed bottom-4 right-4 z-50' role='complementary' aria-label='Notifications'>
                 <NotificationOptIn />
               </div>
