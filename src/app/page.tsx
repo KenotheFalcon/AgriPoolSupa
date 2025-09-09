@@ -1,38 +1,36 @@
-import { Suspense, lazy } from 'react';
-import { OptimizedLoader } from '@/components/layout/performance-layout';
-
-// Lazy load non-critical components
-const HeroSection = lazy(() => import('@/app/components/landing/hero-section'));
-const HowItWorksSection = lazy(() => import('@/components/landing/how-it-works-section').then(mod => ({ default: mod.HowItWorksSection })));
-const FeaturesSection = lazy(() => import('@/app/components/landing/features-section'));
-const CTASection = lazy(() => import('@/app/components/landing/cta-section'));
-
-// Loading skeletons
-const HeroSkeleton = () => <div className="h-96 bg-gradient-to-br from-green-50 to-blue-50 animate-pulse" />;
-const SectionSkeleton = () => <div className="h-64 bg-muted animate-pulse rounded-lg mx-4 my-8" />;
+import { Suspense } from 'react';
+import HeroSection from '@/app/components/landing/hero-section';
+import { HowItWorksSection } from '@/components/landing/how-it-works-section';
+import FeaturesSection from '@/app/components/landing/features-section';
+import CTASection from '@/app/components/landing/cta-section';
+import { Footer } from '@/components/layout/footer';
+import { 
+  HeroSectionSkeleton, 
+  FeaturesSectionSkeleton, 
+  CTASectionSkeleton 
+} from '@/app/components/landing/loading-sections';
 
 export default function HomePage() {
   return (
     <div className='min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-green-950 dark:via-background dark:to-blue-950'>
-      {/* Critical above-the-fold content */}
-      <OptimizedLoader priority>
-        <Suspense fallback={<HeroSkeleton />}>
-          <HeroSection 
-            image={{ path: '/images/hero-bg.jpg', alt: 'Fresh produce' }}
-            title="Connect with Local Farmers"
-            description="Buy fresh, quality produce directly from verified local farmers in your area"
-            ctaText="Get Started"
-            ctaLink="/auth/signup"
-          />
-        </Suspense>
-      </OptimizedLoader>
+      {/* Hero Section */}
+      <Suspense fallback={<HeroSectionSkeleton />}>
+        <HeroSection 
+          image={{ path: '/images/hero-bg.jpg', alt: 'Fresh produce' }}
+          title="Connect with Local Farmers"
+          description="Buy fresh, quality produce directly from verified local farmers in your area"
+          ctaText="Get Started"
+          ctaLink="/auth/signup"
+        />
+      </Suspense>
 
-      {/* Below-the-fold content - lazy loaded */}
-      <Suspense fallback={<SectionSkeleton />}>
+      {/* How It Works Section */}
+      <Suspense fallback={<div>Loading...</div>}>
         <HowItWorksSection />
       </Suspense>
 
-      <Suspense fallback={<SectionSkeleton />}>
+      {/* Features Section */}
+      <Suspense fallback={<FeaturesSectionSkeleton />}>
         <FeaturesSection 
           title="Why Choose AgriPool"
           description="Direct from farm to table"
@@ -56,7 +54,8 @@ export default function HomePage() {
         />
       </Suspense>
 
-      <Suspense fallback={<SectionSkeleton />}>
+      {/* CTA Section */}
+      <Suspense fallback={<CTASectionSkeleton />}>
         <CTASection 
           image={{ path: '/images/cta-bg.jpg', alt: 'Join us' }}
           title="Ready to Get Started?"
@@ -65,6 +64,9 @@ export default function HomePage() {
           ctaLink="/auth/signup"
         />
       </Suspense>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

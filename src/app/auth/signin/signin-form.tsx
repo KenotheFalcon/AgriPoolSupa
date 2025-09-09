@@ -104,7 +104,7 @@ export function SignInForm() {
 
       <div className='flex flex-col space-y-2 text-center text-sm'>
         <Link href='/auth/signup' className='text-muted-foreground hover:text-primary'>
-          Don&apos;t have an account? Sign up
+          Don't have an account? Sign up
         </Link>
         <Link href='/auth/forgot-password' className='text-muted-foreground hover:text-primary'>
           Forgot your password?

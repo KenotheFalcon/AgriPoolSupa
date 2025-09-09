@@ -118,13 +118,13 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
                     <div className='flex items-center space-x-2'>
                       <div className='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
                         <span className='text-sm font-medium text-green-700 dark:text-green-300'>
-                          {user?.displayName?.[0]?.toUpperCase() ||
-                            user?.email?.[0]?.toUpperCase() ||
+                          {user?.firstName?.[0]?.toUpperCase() ||
+                            user?.lastName?.[0]?.toUpperCase() ||
                             'U'}
                         </span>
                       </div>
                       <span className='hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300'>
-                        {user?.displayName || user?.email}
+                        {user?.firstName} {user?.lastName}
                       </span>
                     </div>
                   </Button>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getAdminAuth } from './src/lib/firebase-admin';
+import { getAdminAuth } from './lib/firebase-admin';
 
 export async function middleware(request: NextRequest) {
   const sessionCookie = request.cookies.get('session')?.value;

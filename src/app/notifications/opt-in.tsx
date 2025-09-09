@@ -8,30 +8,19 @@ import { saveFCMToken } from './actions';
 import { Bell } from 'lucide-react';
 
 export function NotificationOptIn() {
-  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>('default');
+  const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Only access browser APIs on the client side
-    if (typeof window !== 'undefined') {
-      setNotificationPermission(Notification.permission);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      onMessageListener().then((payload: any) => {
-        toast({
-          title: payload.notification.title,
-          description: payload.notification.body,
-        });
+    onMessageListener().then((payload: any) => {
+      toast({
+        title: payload.notification.title,
+        description: payload.notification.body,
       });
-    }
+    });
   }, [toast]);
 
   const handleSubscribe = async () => {
-    if (typeof window === 'undefined') return;
-    
     if (Notification.permission === 'granted') {
       toast({ description: 'You are already subscribed to notifications.' });
       return;

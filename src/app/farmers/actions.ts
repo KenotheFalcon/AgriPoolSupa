@@ -21,7 +21,7 @@ const ProduceListingSchema = z.object({
   longitude: z.coerce.number(),
 });
 
-export async function createProduceListing(prevState: any, formData: FormData) {
+export async function createProduceListing(formData: FormData) {
   try {
     const user = await requireRole('farmer');
 
