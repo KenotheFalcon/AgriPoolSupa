@@ -69,7 +69,7 @@ async function handlePaymentAndOrder(
   return paymentResponse.data.link;
 }
 
-export async function createGroupBuy(formData: FormData) {
+export async function createGroupBuy(prevState: any, formData: FormData) {
   try {
     const user = await requireRole('buyer');
     const db = await getAdminFirestore();
@@ -156,7 +156,7 @@ export async function createGroupBuy(formData: FormData) {
   }
 }
 
-export async function joinGroupBuy(formData: FormData) {
+export async function joinGroupBuy(prevState: any, formData: FormData) {
   try {
     const user = await requireRole('buyer');
     const db = await getAdminFirestore();

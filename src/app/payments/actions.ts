@@ -11,7 +11,7 @@ const ConfirmReceiptSchema = z.object({
   groupId: z.string(),
 });
 
-export async function confirmReceipt(formData: FormData) {
+export async function confirmReceipt(prevState: any, formData: FormData) {
   try {
     const user = await requireRole('buyer');
     const db = await getAdminFirestore();

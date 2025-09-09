@@ -30,7 +30,7 @@ const BadgeStatusSchema = z.object({
 });
 
 // Action to allow an admin to change a user's role
-export async function setUserRole(formData: FormData) {
+export async function setUserRole(prevState: any, formData: FormData) {
   try {
     await requireRole('support'); // Only support staff can run this
 
@@ -60,7 +60,7 @@ export async function setUserRole(formData: FormData) {
 }
 
 // Action to allow an admin to suspend a listing
-export async function suspendListing(formData: FormData) {
+export async function suspendListing(prevState: any, formData: FormData) {
   try {
     await requireRole('support'); // Only support staff can run this
 
@@ -90,7 +90,7 @@ export async function suspendListing(formData: FormData) {
 }
 
 // Action for admins to define the master checklist
-export async function updateChecklist(formData: FormData) {
+export async function updateChecklist(prevState: any, formData: FormData) {
   try {
     await requireRole('support');
     const items = formData.getAll('items') as string[];
@@ -110,7 +110,7 @@ export async function updateChecklist(formData: FormData) {
 }
 
 // Action for admins to update a single checklist item for a farmer
-export async function updateFarmerVerificationStatus(formData: FormData) {
+export async function updateFarmerVerificationStatus(prevState: any, formData: FormData) {
   try {
     await requireRole('support');
     const isCompleted = formData.get('isCompleted') === 'true';
@@ -145,7 +145,7 @@ export async function updateFarmerVerificationStatus(formData: FormData) {
 }
 
 // Action for admins to grant or revoke the final badge
-export async function toggleVerifiedBadge(formData: FormData) {
+export async function toggleVerifiedBadge(prevState: any, formData: FormData) {
   try {
     await requireRole('support');
     const isVerified = formData.get('isVerified') === 'true';
