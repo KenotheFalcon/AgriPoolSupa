@@ -1,6 +1,5 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter as FontSans } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import Navbar from '@/components/layout/navbar';
@@ -13,12 +12,9 @@ import { ServiceWorkerRegistrar } from '@/components/providers/service-worker-re
 export const metadata: Metadata = {
   title: 'AgriPool NG - Connect with Local Farmers',
   description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria',
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#28a745',
 };
-
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -28,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='theme-color' content='#28a745' />
         <link rel='icon' href='/icons/icon-192x192.png' />
       </head>
-      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.className)}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
         <AuthProvider>
           <ThemeProvider
             attribute='class'

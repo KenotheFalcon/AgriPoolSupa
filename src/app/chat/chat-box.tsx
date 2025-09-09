@@ -1,17 +1,13 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
 import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
-import { sendMessage } from './actions';
+import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { ServerUser } from '@/lib/auth/server';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { AudioRecorder } from './audio-recorder';
-import { AudioPlayer } from './audio-player';
 
 interface Message {
   id: string;
@@ -23,21 +19,10 @@ interface Message {
   timestamp: Timestamp;
 }
 
-const initialState = { success: false, error: null };
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type='submit' disabled={pending}>
-      {pending ? 'Sending...' : 'Send'}
-    </Button>
-  );
-}
-
 export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }) {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [formState, formAction] = useFormState(sendMessage, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [newMessage, setNewMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,12 +40,6 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
   }, [groupId]);
 
   useEffect(() => {
-    if (formState.success) {
-      formRef.current?.reset();
-    }
-  }, [formState]);
-
-  useEffect(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTo({
         top: scrollAreaRef.current.scrollHeight,
@@ -68,6 +47,28 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
       });
     }
   }, [messages]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMessage.trim() || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      await addDoc(collection(db, 'groupBuys', groupId, 'messages'), {
+        senderId: user.uid,
+        senderName: user.displayName || user.email,
+        senderRole: user.role,
+        text: newMessage,
+        audioUrl: null,
+        timestamp: serverTimestamp(),
+      });
+      setNewMessage('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const getRoleVariant = (role: string) => {
     switch (role) {
@@ -100,7 +101,6 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
                 }`}
               >
                 {msg.text && <p className='text-sm'>{msg.text}</p>}
-                {msg.audioUrl && <AudioPlayer src={msg.audioUrl} />}
                 <p className='text-xs opacity-70 mt-1'>
                   {msg.timestamp?.toDate().toLocaleTimeString()}
                 </p>
@@ -110,24 +110,19 @@ export function ChatBox({ groupId, user }: { groupId: string; user: ServerUser }
         </div>
       </ScrollArea>
       <div className='p-4 border-t'>
-        <form ref={formRef} action={formAction} className='flex gap-2 items-center'>
-          <input type='hidden' name='groupId' value={groupId} />
+        <form onSubmit={handleSubmit} className='flex gap-2 items-center'>
           <Input
-            name='message'
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
             placeholder='Type a message...'
             className='flex-grow'
             autoComplete='off'
+            disabled={isLoading}
           />
-          <AudioRecorder
-            onRecordingComplete={(blob) => {
-              const formData = new FormData(formRef.current!);
-              formData.append('audio', blob, 'voice-message.webm');
-              formAction(formData);
-            }}
-          />
-          <SubmitButton />
+          <Button type='submit' disabled={isLoading || !newMessage.trim()}>
+            {isLoading ? 'Sending...' : 'Send'}
+          </Button>
         </form>
-        {formState.error && <p className='text-sm text-red-500 mt-2'>{formState.error}</p>}
       </div>
     </div>
   );

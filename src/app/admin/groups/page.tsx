@@ -15,7 +15,7 @@ import { AdminChatModal } from './admin-chat-modal';
 async function getAllGroupBuys() {
   const db = await getAdminFirestore();
   const groupsSnapshot = await db.collection('groupBuys').orderBy('createdAt', 'desc').get();
-  return groupsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return groupsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as any));
 }
 
 export default async function AdminGroupsPage() {

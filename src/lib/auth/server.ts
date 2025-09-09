@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers';
-import { getAdminAuth } from '@/lib/firebase-admin';
+import { getAdminAuth, getAdminFirestore } from '@/lib/firebase-admin';
 import { redirect } from 'next/navigation';
 
 export interface ServerUser {
   uid: string;
   email: string | null;
-  role: 'buyer' | 'farmer';
+  role: 'buyer' | 'farmer' | 'support';
   emailVerified: boolean;
   displayName: string | null;
 }
@@ -27,8 +27,8 @@ export async function getServerUser(): Promise<ServerUser | null> {
 
     return {
       uid: decodedToken.uid,
-      email: decodedToken.email,
-      role: decodedToken.role as 'buyer' | 'farmer',
+      email: decodedToken.email || null,
+      role: decodedToken.role as 'buyer' | 'farmer' | 'support',
       emailVerified: decodedToken.email_verified || false,
       displayName: decodedToken.name || null,
     };
@@ -55,7 +55,7 @@ export async function requireAuth(): Promise<ServerUser> {
 /**
  * Require specific role - redirects to signin if user doesn't have the required role
  */
-export async function requireRole(requiredRole: 'buyer' | 'farmer'): Promise<ServerUser> {
+export async function requireRole(requiredRole: 'buyer' | 'farmer' | 'support'): Promise<ServerUser> {
   const user = await requireAuth();
 
   if (user.role !== requiredRole) {
