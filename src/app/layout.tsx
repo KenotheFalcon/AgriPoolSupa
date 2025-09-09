@@ -12,7 +12,50 @@ import { ServiceWorkerRegistrar } from '@/components/providers/service-worker-re
 
 export const metadata: Metadata = {
   title: 'AgriPool NG - Connect with Local Farmers',
-  description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria',
+  description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria. Supporting community-driven agriculture and sustainable farming practices.',
+  keywords: ['agriculture', 'farming', 'Nigeria', 'fresh produce', 'local farmers', 'community', 'sustainable'],
+  authors: [{ name: 'AgriPool NG Team' }],
+  creator: 'AgriPool NG',
+  publisher: 'AgriPool NG',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://agripool.ng'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'AgriPool NG - Connect with Local Farmers',
+    description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria',
+    url: 'https://agripool.ng',
+    siteName: 'AgriPool NG',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AgriPool NG - Connect with Local Farmers',
+    description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria',
+    creator: '@agripoolng',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
 };
 
 // Temporarily disable Google Font due to network restrictions
@@ -26,8 +69,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en' suppressHydrationWarning>
       <head>
         <link rel='manifest' href='/manifest.json' />
-        <meta name='theme-color' content='#28a745' />
+        <meta name='theme-color' content='#22c55e' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta name='apple-mobile-web-app-status-bar-style' content='default' />
+        <meta name='apple-mobile-web-app-title' content='AgriPool NG' />
         <link rel='icon' href='/icons/icon-192x192.png' />
+        <link rel='apple-touch-icon' href='/icons/icon-192x192.png' />
       </head>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>
         <AuthProvider>
@@ -39,9 +86,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           >
             <ServiceWorkerRegistrar />
             <div className='relative flex min-h-screen flex-col'>
+              <a 
+                href='#main-content' 
+                className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-green-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'
+              >
+                Skip to main content
+              </a>
               <Navbar />
-              <div className='flex-1'>{children}</div>
-              <div className='fixed bottom-4 right-4 z-50'>
+              <main id='main-content' className='flex-1' tabIndex={-1}>
+                {children}
+              </main>
+              <div className='fixed bottom-4 right-4 z-50' role='complementary' aria-label='Notifications'>
                 <NotificationOptIn />
               </div>
               <Footer />
