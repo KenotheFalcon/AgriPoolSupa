@@ -1,20 +1,7 @@
 'use client';
 
-import { OptimizedImage } from '@/components/ui/optimized-image';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Star } from 'lucide-react';
-
-interface CTASectionProps {
-  image: {
-    path: string;
-    alt: string;
-  };
-  title: string;
-  description: string;
-  ctaText: string;
-  ctaLink: string;
-}
 
 export function CTASection() {
   return (

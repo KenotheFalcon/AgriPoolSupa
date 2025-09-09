@@ -64,7 +64,7 @@ const mockGroups = [
 ];
 
 export default function FeaturedGroups() {
-  const [location, setLocation] = useState('Lagos');
+  const [location] = useState('Lagos');
 
   return (
     <section className='bg-muted/30 py-16'>

@@ -1,5 +1,4 @@
 import { getAdminFirestore } from '@/lib/firebase-admin';
-import { performanceMonitor } from './performance';
 import { QueryDocumentSnapshot } from 'firebase-admin/firestore';
 
 interface Alert {

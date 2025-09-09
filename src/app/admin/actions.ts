@@ -78,7 +78,7 @@ export async function suspendListing(formData: FormData) {
     });
 
     // In a real app, you might also notify the farmer.
-    const notificationRef = db.collection('notifications').doc();
+    // const notificationRef = db.collection('notifications').doc();
     // await notificationRef.set(...)
 
     revalidatePath('/admin/listings');

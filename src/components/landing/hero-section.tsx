@@ -1,6 +1,5 @@
 'use client';
 
-import { OptimizedImage } from '@/components/ui/optimized-image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, Users, ShoppingCart } from 'lucide-react';
@@ -16,13 +15,7 @@ interface HeroSectionProps {
   ctaLink: string;
 }
 
-export default function HeroSection({
-  title,
-  description,
-  image,
-  ctaText,
-  ctaLink,
-}: HeroSectionProps) {
+export default function HeroSection({}: HeroSectionProps) {
   return (
     <section className='relative overflow-hidden bg-gradient-to-br from-green-600 via-green-700 to-green-800 text-white'>
       {/* Background Pattern */}

@@ -3,7 +3,7 @@
 import { memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Package, DollarSign, Users, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PerformanceMetrics } from '@/components/dashboard/performance-metrics';
@@ -17,30 +17,6 @@ const data = [
   { name: 'Apr', value: 800 },
   { name: 'May', value: 500 },
   { name: 'Jun', value: 700 },
-];
-
-const recentActivity = [
-  {
-    id: 1,
-    type: 'order',
-    description: 'New order #1234 received',
-    time: '2 minutes ago',
-    icon: Package,
-  },
-  {
-    id: 2,
-    type: 'payment',
-    description: 'Payment received for order #1233',
-    time: '1 hour ago',
-    icon: DollarSign,
-  },
-  {
-    id: 3,
-    type: 'user',
-    description: 'New user registration',
-    time: '2 hours ago',
-    icon: Users,
-  },
 ];
 
 const StatCard = memo(

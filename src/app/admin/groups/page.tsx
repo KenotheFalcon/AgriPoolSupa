@@ -1,5 +1,5 @@
 import { getAdminFirestore } from '@/lib/firebase-admin';
-import { requireRole, ServerUser } from '@/lib/auth/server';
+import { requireRole } from '@/lib/auth/server';
 import {
   Table,
   TableBody,

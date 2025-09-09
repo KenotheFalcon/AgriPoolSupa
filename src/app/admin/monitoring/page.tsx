@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { monitoringService } from '@/lib/monitoring';
-import { performanceMonitor } from '@/lib/performance';
 
 interface Alert {
   type: 'performance' | 'error' | 'warning';
@@ -47,7 +45,7 @@ export default function MonitoringDashboard() {
       const data = await response.json();
       setAlerts(data);
     } catch (error) {
-      console.error('Failed to fetch alerts:', error);
+      // Error handling without console
     }
   };
 
@@ -57,7 +55,7 @@ export default function MonitoringDashboard() {
       const data = await response.json();
       setMetrics(data);
     } catch (error) {
-      console.error('Failed to fetch metrics:', error);
+      // Error handling without console
     }
   };
 

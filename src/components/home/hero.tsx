@@ -13,7 +13,6 @@ export default function Hero() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, this would navigate to the search results
-    console.log('Searching near:', location);
   };
 
   return (

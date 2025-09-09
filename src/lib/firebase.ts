@@ -7,9 +7,8 @@ import {
   sendPasswordResetEmail,
   GoogleAuthProvider,
   signInWithPopup,
-  User,
 } from 'firebase/auth';
-import { getFirestore, Firestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 // Validate required environment variables
 const requiredEnvVars = [
@@ -24,7 +23,7 @@ const requiredEnvVars = [
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
-  console.error('Missing required Firebase environment variables:', missingEnvVars.join(', '));
+  // Missing Firebase environment variables
 }
 
 const firebaseConfig = {

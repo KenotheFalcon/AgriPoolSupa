@@ -1,4 +1,4 @@
-import { getAdminAuth, getAdminFirestore } from '@/lib/firebase-admin';
+import { getAdminAuth } from '@/lib/firebase-admin';
 import {
   Table,
   TableBody,

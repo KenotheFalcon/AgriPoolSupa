@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { withRole, AuthenticatedRequest } from '@/lib/middleware/with-auth';
 import { getAdminFirestore } from '@/lib/firebase-admin';
 
-async function getDashboardData(req: AuthenticatedRequest) {
+async function getDashboardData() {
   const db = await getAdminFirestore();
   const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
