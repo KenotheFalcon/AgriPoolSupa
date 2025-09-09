@@ -15,3 +15,8 @@ export const onNotificationMessage = (callback: any) => {
   console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
   return () => {};
 };
+
+export const onMessageListener = () => {
+  console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
+  return Promise.resolve();
+};
