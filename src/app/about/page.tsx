@@ -47,7 +47,7 @@ export default function AboutPage() {
               About AgriPool
             </h1>
             <p className='mt-6 text-lg text-muted-foreground'>
-              We're revolutionizing the way Nigerians access fresh produce by connecting local
+              We&apos;re revolutionizing the way Nigerians access fresh produce by connecting local
               farmers directly with consumers through community-driven purchase groups.
             </p>
           </motion.div>
@@ -66,7 +66,7 @@ export default function AboutPage() {
             >
               <h2 className='text-3xl font-bold tracking-tight text-foreground'>Our Mission</h2>
               <p className='mt-6 text-lg text-muted-foreground'>
-                At AgriPool, we're on a mission to transform Nigeria's agricultural landscape by
+                At AgriPool, we&apos;re on a mission to transform Nigeria&apos;s agricultural landscape by
                 creating a sustainable ecosystem that benefits both farmers and consumers. We
                 believe in the power of community-driven agriculture and the importance of
                 supporting local farmers while providing access to fresh, quality produce.
@@ -143,7 +143,7 @@ export default function AboutPage() {
           >
             <h2 className='text-3xl font-bold tracking-tight text-foreground'>Join Our Team</h2>
             <p className='mt-4 text-lg text-muted-foreground'>
-              We're always looking for passionate individuals to join our mission
+              We&apos;re always looking for passionate individuals to join our mission
             </p>
           </motion.div>
 

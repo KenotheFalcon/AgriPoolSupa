@@ -8,6 +8,20 @@ const withPWA = require('next-pwa')({
 const path = require('path');
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  webpack: (config, { isServer }) => {
+    // Exclude the functions directory from webpack processing
+    config.watchOptions = {
+      ignored: ['**/functions/**', '**/node_modules/**']
+    };
+    return config;
+  },
+  // Exclude functions directory from builds
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': ['./functions/**/*'],
+    },
+  },
+};
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

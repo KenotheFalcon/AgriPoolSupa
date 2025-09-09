@@ -5,6 +5,7 @@
     "prettier/prettier": "warn",
     "no-unused-vars": "warn",
     "no-console": "warn",
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "react/no-unescaped-entities": "warn"
   }
 }
