@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Inter as FontSans } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import Navbar from '@/components/layout/navbar';
@@ -14,6 +15,13 @@ export const metadata: Metadata = {
   description: 'Buy fresh agricultural produce directly from verified local farmers in Nigeria',
 };
 
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  fallback: ['system-ui', 'arial'],
+  display: 'swap',
+});
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' suppressHydrationWarning>
@@ -22,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name='theme-color' content='#28a745' />
         <link rel='icon' href='/icons/icon-192x192.png' />
       </head>
-      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <AuthProvider>
           <ThemeProvider
             attribute='class'
