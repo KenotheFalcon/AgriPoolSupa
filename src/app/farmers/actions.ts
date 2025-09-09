@@ -78,7 +78,6 @@ export async function createProduceListing(formData: FormData) {
     revalidatePath('/farmers');
     return { message: 'Produce listing created successfully.' };
   } catch (error) {
-    console.error('Error creating produce listing:', error);
     return { message: 'An unexpected error occurred.' };
   }
 }
@@ -116,7 +115,6 @@ export async function dispatchProduce(listingId: string) {
     revalidatePath('/farmers');
     return { message: 'Delivery process initiated.' };
   } catch (error) {
-    console.error('Error dispatching produce:', error);
     return { message: 'Failed to initiate delivery.' };
   }
 }

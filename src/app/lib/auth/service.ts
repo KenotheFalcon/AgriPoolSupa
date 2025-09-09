@@ -90,7 +90,6 @@ class AuthService {
         status: 'active',
       });
     } catch (error) {
-      console.error('Registration error:', error);
       throw error;
     }
   }
@@ -143,7 +142,6 @@ class AuthService {
         },
       };
     } catch (error) {
-      console.error('Login error:', error);
       throw new Error('Invalid credentials');
     }
   }
@@ -186,7 +184,6 @@ class AuthService {
         },
       };
     } catch (error) {
-      console.error('Session validation error:', error);
       return null;
     }
   }
@@ -196,7 +193,6 @@ class AuthService {
       const db = getFirestore();
       await db.collection('sessions').doc(token).delete();
     } catch (error) {
-      console.error('Logout error:', error);
       throw error;
     }
   }
@@ -218,7 +214,6 @@ class AuthService {
 
       return true;
     } catch (error) {
-      console.error('Email verification error:', error);
       return false;
     }
   }
@@ -229,7 +224,6 @@ class AuthService {
       await auth.generatePasswordResetLink(email);
       return true;
     } catch (error) {
-      console.error('Password reset request error:', error);
       return false;
     }
   }
@@ -241,7 +235,6 @@ class AuthService {
       await auth.updateUser(decodedToken.uid, { password: newPassword });
       return true;
     } catch (error) {
-      console.error('Password reset error:', error);
       return false;
     }
   }
@@ -264,7 +257,6 @@ class AuthService {
       // You can expand this later to support more granular permissions.
       return true;
     } catch (error) {
-      console.error('Permission check error:', error);
       return false;
     }
   }

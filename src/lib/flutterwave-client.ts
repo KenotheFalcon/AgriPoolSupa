@@ -68,7 +68,6 @@ export class FlutterwaveClient {
 
       return { ...response.data, tx_ref };
     } catch (error) {
-      console.error('Flutterwave payment initiation error:', error);
       return {
         status: 'error',
         message: 'Failed to initiate payment',
@@ -95,7 +94,6 @@ export class FlutterwaveClient {
 
       return response.data;
     } catch (error) {
-      console.error('Flutterwave escrow creation error:', error);
       return {
         status: 'error',
         message: 'Failed to create escrow',
@@ -115,7 +113,6 @@ export class FlutterwaveClient {
 
       return response.data;
     } catch (error) {
-      console.error('Flutterwave transaction verification error:', error);
       return {
         status: 'error',
         message: 'Failed to verify transaction',
@@ -139,7 +136,6 @@ export class FlutterwaveClient {
 
       return response.data;
     } catch (error) {
-      console.error('Flutterwave escrow release error:', error);
       return {
         status: 'error',
         message: 'Failed to release escrow',

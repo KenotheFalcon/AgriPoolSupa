@@ -11,28 +11,19 @@ export default function TestFirebase() {
     const checkFirebaseConnection = async () => {
       try {
         // Log environment variables (without sensitive data)
-        console.log('Firebase Config:', {
-          authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-          projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-          storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-        });
+        // Firebase config check (silent in production)
 
         // Check if Firebase is initialized
         if (!app) {
           throw new Error('Firebase app not initialized');
         }
 
-        console.log('Firebase App:', app);
-        console.log('Firebase Auth:', auth);
-
         // Try to get the current user to test auth
-        const currentUser = auth.currentUser;
-        console.log('Current User:', currentUser);
+        auth.currentUser;
 
         setConnectionStatus('Connected to Firebase!');
         setErrorDetails('');
       } catch (error: any) {
-        console.error('Firebase connection error:', error);
         setConnectionStatus('Error connecting to Firebase');
         setErrorDetails(error.message || 'Unknown error occurred');
       }

@@ -80,8 +80,6 @@ export async function POST(request: Request) {
       message: 'Please check your email to verify your account.',
     });
   } catch (error: any) {
-    console.error('Signup error:', error);
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid input data', details: error.errors },

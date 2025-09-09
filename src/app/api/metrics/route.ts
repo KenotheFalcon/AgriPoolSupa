@@ -8,8 +8,6 @@ export async function POST(request: Request) {
     performanceMonitor.trackSectionLoad(name, time);
     return NextResponse.json({ message: 'Metrics recorded' }, { status: 200 });
   } catch (error) {
-    console.error('Failed to record metrics:', error);
-
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
 
     monitoringService.addAlert({

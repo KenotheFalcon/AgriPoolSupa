@@ -54,7 +54,6 @@ export function ProfileForm({ initialData, onSubmit }: ProfileFormProps) {
     try {
       await onSubmit(formData);
     } catch (error) {
-      console.error('Error updating profile:', error);
     } finally {
       setIsLoading(false);
     }

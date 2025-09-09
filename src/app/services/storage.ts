@@ -23,7 +23,6 @@ class StorageService {
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     } catch (error: any) {
-      console.error('Error uploading image:', error);
       throw new Error(error.message);
     }
   }
@@ -33,7 +32,6 @@ class StorageService {
       const storageRef = ref(this.storage, path);
       return await getDownloadURL(storageRef);
     } catch (error: any) {
-      console.error('Error getting image URL:', error);
       throw new Error(error.message);
     }
   }

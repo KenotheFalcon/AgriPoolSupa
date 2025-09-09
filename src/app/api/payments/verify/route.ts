@@ -80,7 +80,6 @@ export async function GET(request: Request) {
       return NextResponse.redirect(new URL('/dashboard?payment_status=failed', request.url));
     }
   } catch (error) {
-    console.error('Payment verification error:', error);
     const message = error instanceof Error ? error.message : 'An unexpected error occurred.';
     return NextResponse.json({ error: message }, { status: 500 });
   }

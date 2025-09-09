@@ -130,7 +130,6 @@ class MonitoringService {
         this.config = config.value;
       }
     } catch (error) {
-      console.error('Failed to load monitoring configuration:', error);
       // Continue with default config
     }
   }
@@ -187,7 +186,6 @@ class MonitoringService {
 
       return result.rows[0];
     } catch (error) {
-      console.error('Failed to add alert:', error);
       throw error;
     }
   }
@@ -225,7 +223,6 @@ class MonitoringService {
       const result = await dbPool.query(query, params);
       return result.rows;
     } catch (error) {
-      console.error('Failed to get alerts:', error);
       throw error;
     }
   }
@@ -249,7 +246,6 @@ class MonitoringService {
 
       return result.rows[0];
     } catch (error) {
-      console.error('Failed to update alert status:', error);
       throw error;
     }
   }
@@ -267,7 +263,6 @@ class MonitoringService {
 
       return result.rows[0];
     } catch (error) {
-      console.error(`Failed to get config for key ${key}:`, error);
       throw new DatabaseError(`Failed to get config for key ${key}`, 'GET_CONFIG_FAILED');
     }
   }

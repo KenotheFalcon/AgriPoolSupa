@@ -10,8 +10,7 @@ export async function POST(request: Request) {
     // 3. Send them to your analytics service
     // 4. Generate alerts if metrics exceed thresholds
 
-    // For now, we'll just log them
-    console.log('Performance Metrics:', metrics);
+    // For now, we'll just process them silently
 
     // Example threshold checks
     const thresholds = {
@@ -38,13 +37,11 @@ export async function POST(request: Request) {
     });
 
     if (alerts.length > 0) {
-      console.warn('Performance Alerts:', alerts);
       // Here you would typically send these alerts to your monitoring system
     }
 
     return NextResponse.json({ success: true, alerts });
   } catch (error) {
-    console.error('Error processing performance metrics:', error);
     return NextResponse.json({ error: 'Failed to process performance metrics' }, { status: 500 });
   }
 }

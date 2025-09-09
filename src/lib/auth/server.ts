@@ -33,7 +33,6 @@ export async function getServerUser(): Promise<ServerUser | null> {
       displayName: decodedToken.name || null,
     };
   } catch (error) {
-    console.error('Error getting server user:', error);
     return null;
   }
 }
@@ -79,7 +78,6 @@ export async function getServerUserData(uid: string) {
 
     return userDoc.data();
   } catch (error) {
-    console.error('Error getting user data:', error);
     return null;
   }
 }

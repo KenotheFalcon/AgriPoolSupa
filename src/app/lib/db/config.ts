@@ -55,12 +55,9 @@ export function createPool(config: Partial<DatabaseConfig> = {}): Pool {
 export const dbPool = createPool();
 
 // Test database connection
-dbPool.on('connect', () => {
-  console.log('Connected to PostgreSQL database');
-});
+dbPool.on('connect', () => {});
 
 dbPool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
   process.exit(-1);
 });
 
@@ -70,7 +67,6 @@ export async function query(text: string, params?: any[]) {
   try {
     return await client.query(text, params);
   } catch (error) {
-    console.error('Database query error:', error);
     throw error;
   } finally {
     client.release();

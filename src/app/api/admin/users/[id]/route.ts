@@ -20,7 +20,6 @@ async function getUser(req: AuthenticatedRequest, { params }: { params: { id: st
       ...user,
     });
   } catch (error) {
-    console.error('Error fetching user:', error);
     return NextResponse.json({ error: 'Failed to fetch user' }, { status: 500 });
   }
 }
@@ -52,7 +51,6 @@ async function updateUser(req: AuthenticatedRequest, { params }: { params: { id:
       ...updatedDoc.data(),
     });
   } catch (error) {
-    console.error('Error updating user:', error);
     return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
   }
 }
@@ -72,7 +70,6 @@ async function deleteUser(req: AuthenticatedRequest, { params }: { params: { id:
 
     return NextResponse.json({ message: 'User deleted successfully' });
   } catch (error) {
-    console.error('Error deleting user:', error);
     return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 });
   }
 }

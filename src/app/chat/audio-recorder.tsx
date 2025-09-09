@@ -34,7 +34,6 @@ export function AudioRecorder({
       mediaRecorder.start();
       setIsRecording(true);
     } catch (err) {
-      console.error('Error accessing microphone:', err);
       // Handle permissions error
     }
   };

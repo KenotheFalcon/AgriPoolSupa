@@ -119,7 +119,6 @@ export class RateLimiter {
 
       return null;
     } catch (error) {
-      console.error('Rate limiting error:', error);
       // Allow request if rate limiting fails
       return null;
     }

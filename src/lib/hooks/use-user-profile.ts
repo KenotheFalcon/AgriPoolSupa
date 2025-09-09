@@ -37,7 +37,6 @@ export function useUserProfile(uid: string) {
         description: 'Failed to update profile',
         variant: 'destructive',
       });
-      console.error('Profile update error:', error);
     },
   });
 

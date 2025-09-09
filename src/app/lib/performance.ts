@@ -42,7 +42,6 @@ export class PerformanceService {
         ]
       );
     } catch (error) {
-      console.error('Failed to record performance metrics:', error);
       throw error;
     }
   }
@@ -67,7 +66,6 @@ export class PerformanceService {
         userAgent: row.user_agent,
       }));
     } catch (error) {
-      console.error('Failed to fetch performance metrics:', error);
       throw error;
     }
   }
@@ -92,7 +90,6 @@ export class PerformanceService {
         userAgent: row.user_agent,
       }));
     } catch (error) {
-      console.error('Failed to fetch latest performance metrics:', error);
       throw error;
     }
   }

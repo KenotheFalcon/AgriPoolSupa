@@ -50,17 +50,14 @@ export function UsersTable({ initialUsers, initialPagination }: UsersTableProps)
 
   const handleEdit = async (user: User) => {
     // Implement edit functionality
-    console.log('Edit user:', user);
   };
 
   const handleDelete = async (userId: string) => {
     // Implement delete functionality
-    console.log('Delete user:', userId);
   };
 
   const handleStatusChange = async (userId: string, status: User['status']) => {
     // Implement status change functionality
-    console.log('Change status:', userId, status);
   };
 
   const filteredUsers = users.filter((user) => {

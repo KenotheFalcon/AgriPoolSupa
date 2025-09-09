@@ -105,7 +105,6 @@ class PerformanceMonitor {
       body: JSON.stringify(allMetrics),
       keepalive: true,
     }).catch((error) => {
-      console.error('Error sending performance metrics:', error);
       monitoringService.addAlert({
         type: 'performance-metrics-failure',
         message: 'Failed to send performance metrics to analytics',

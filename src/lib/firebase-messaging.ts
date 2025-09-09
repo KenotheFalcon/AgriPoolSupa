@@ -28,14 +28,11 @@ export const getFCMToken = async () => {
       });
 
       if (currentToken) {
-        console.log('FCM Token:', currentToken);
         return currentToken;
       } else {
-        console.log('No registration token available. Request permission to generate one.');
         return null;
       }
     } catch (err) {
-      console.error('An error occurred while retrieving token. ', err);
       return null;
     }
   }

@@ -147,9 +147,7 @@ export class BackupService {
 
       const oldBackups = backups.filter((backup) => backup.created < cutoffDate);
       await Promise.all(oldBackups.map((backup) => fs.unlink(backup.path)));
-    } catch (error) {
-      console.error('Failed to cleanup old backups:', error);
-    }
+    } catch (error) {}
   }
 }
 

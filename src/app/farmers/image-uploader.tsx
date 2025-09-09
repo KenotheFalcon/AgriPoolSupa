@@ -68,7 +68,6 @@ export function ImageUploader({ onUploadsUpdate, maxFiles = 5 }: ImageUploaderPr
             )
           );
         } catch (error) {
-          console.error('Upload failed for', upload.file.name, error);
           setUploads((prev) =>
             prev.map((u) => (u.preview === upload.preview ? { ...u, state: 'error' } : u))
           );
@@ -88,9 +87,7 @@ export function ImageUploader({ onUploadsUpdate, maxFiles = 5 }: ImageUploaderPr
       const imageRef = ref(storage, uploadToRemove.storagePath);
       try {
         await deleteObject(imageRef);
-      } catch (error) {
-        console.error('Failed to delete image from storage:', error);
-      }
+      } catch (error) {}
     }
 
     // Revoke object URL to prevent memory leaks

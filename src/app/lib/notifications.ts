@@ -74,9 +74,7 @@ class NotificationService {
 
     try {
       await Promise.all(promises);
-    } catch (error) {
-      console.error('Failed to send notifications:', error);
-    }
+    } catch (error) {}
   }
 
   /**
@@ -154,7 +152,6 @@ ${alert.metadata ? `Details: ${JSON.stringify(alert.metadata, null, 2)}` : ''}
 
     // Here you would typically use a proper email service
     // For now, we'll just log it
-    console.log('Email notification:', message);
   }
 
   /**

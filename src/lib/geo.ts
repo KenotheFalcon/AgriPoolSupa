@@ -7,7 +7,6 @@ interface GeoPoint {
 
 export async function geocodeAddress(address: string): Promise<GeoPoint | null> {
   if (!process.env.GEOCODING_API_KEY) {
-    console.error('Geocoding API key is missing.');
     // In a real app, you might want to return an error or have a fallback.
     return null;
   }
@@ -35,14 +34,12 @@ export async function geocodeAddress(address: string): Promise<GeoPoint | null> 
 
     return null;
   } catch (error) {
-    console.error('Error geocoding address:', error);
     return null;
   }
 }
 
 export async function reverseGeocode(lat: number, lng: number): Promise<string | null> {
   if (!process.env.GEOCODING_API_KEY) {
-    console.error('Geocoding API key is missing.');
     return null;
   }
 
@@ -58,7 +55,6 @@ export async function reverseGeocode(lat: number, lng: number): Promise<string |
     const data = await response.json();
     return data?.display_name || null;
   } catch (error) {
-    console.error('Error reverse geocoding:', error);
     return null;
   }
 }

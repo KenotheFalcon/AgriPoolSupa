@@ -65,9 +65,7 @@ class Logger {
       // Here you would integrate with your error tracking service
       // For example, Sentry, LogRocket, etc.
       await axios.post('/api/logs', entry);
-    } catch (error) {
-      console.error('Failed to send log to error tracking:', error);
-    }
+    } catch (error) {}
   }
 
   debug(message: string, data?: any) {

@@ -76,7 +76,6 @@ export async function sendMessage(formData: FormData) {
 
     return { success: true };
   } catch (error) {
-    console.error('Error sending message:', error);
     const message = error instanceof Error ? error.message : 'An unexpected error occurred.';
     return { error: message };
   }

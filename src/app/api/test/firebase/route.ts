@@ -42,7 +42,6 @@ export async function GET() {
       },
     });
   } catch (error: any) {
-    console.error('Firebase connection test error:', error);
     return NextResponse.json(
       {
         status: 'error',

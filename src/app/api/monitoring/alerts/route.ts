@@ -32,7 +32,6 @@ export const GET = withAuth(
 
       return NextResponse.json({ alerts });
     } catch (error) {
-      console.error('Error fetching alerts:', error);
       return NextResponse.json({ error: 'Failed to fetch alerts' }, { status: 500 });
     }
   },
@@ -64,7 +63,6 @@ export const POST = withAuth(
         );
       }
 
-      console.error('Error creating alert:', error);
       return NextResponse.json({ error: 'Failed to create alert' }, { status: 500 });
     }
   },
@@ -101,7 +99,6 @@ export const PATCH = withAuth(
         );
       }
 
-      console.error('Error updating alert:', error);
       return NextResponse.json({ error: 'Failed to update alert' }, { status: 500 });
     }
   },
@@ -125,7 +122,6 @@ export const DELETE = withAuth(
       await monitoringService.deleteAlert(id);
       return new NextResponse(null, { status: 204 });
     } catch (error) {
-      console.error('Error deleting alert:', error);
       return NextResponse.json({ error: 'Failed to delete alert' }, { status: 500 });
     }
   },

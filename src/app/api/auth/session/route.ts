@@ -34,7 +34,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ status: 'success' });
   } catch (error) {
-    console.error('Session login error:', error);
     return NextResponse.json({ error: 'Failed to create session' }, { status: 401 });
   }
 }

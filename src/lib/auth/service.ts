@@ -85,7 +85,6 @@ class AuthService {
         emailVerified: user.emailVerified,
       };
     } catch (error) {
-      console.error('Registration error:', error);
       throw error;
     }
   }
@@ -139,7 +138,6 @@ class AuthService {
         },
       };
     } catch (error) {
-      console.error('Login error:', error);
       throw new Error('Invalid credentials');
     }
   }
@@ -189,7 +187,6 @@ class AuthService {
         },
       };
     } catch (error) {
-      console.error('Session validation error:', error);
       return null;
     }
   }
@@ -199,7 +196,6 @@ class AuthService {
       const db = await getAdminFirestore();
       await db.collection('sessions').doc(token).delete();
     } catch (error) {
-      console.error('Logout error:', error);
       throw new Error('Failed to logout');
     }
   }
@@ -266,7 +262,6 @@ class AuthService {
 
       return true;
     } catch (error) {
-      console.error('Error confirming password reset:', error);
       return false;
     }
   }
@@ -277,7 +272,6 @@ class AuthService {
       await adminAuth.verifyIdToken(token);
       return true;
     } catch (error) {
-      console.error('Email verification error:', error);
       return false;
     }
   }

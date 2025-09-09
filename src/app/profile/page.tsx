@@ -23,7 +23,6 @@ export default async function ProfilePage() {
   async function handleSubmit(data: any) {
     'use server';
     // TODO: Implement the actual update logic
-    console.log(data);
   }
 
   return (

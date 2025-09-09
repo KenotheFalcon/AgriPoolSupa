@@ -29,7 +29,6 @@ export async function POST(request: Request) {
       );
     }
 
-    console.error('Forgot password error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

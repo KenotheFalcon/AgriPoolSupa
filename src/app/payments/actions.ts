@@ -108,7 +108,6 @@ export async function confirmReceipt(formData: FormData) {
     revalidatePath('/dashboard');
     return { message: 'Receipt confirmed successfully!' };
   } catch (error) {
-    console.error('Error confirming receipt:', error);
     const message = error instanceof Error ? error.message : 'An unexpected error occurred.';
     return { error: message };
   }

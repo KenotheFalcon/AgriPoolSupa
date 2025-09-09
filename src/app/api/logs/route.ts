@@ -17,11 +17,9 @@ export async function POST(request: Request) {
 
     // Here you would typically send the log to your error tracking service
     // For example, Sentry, LogRocket, etc.
-    console.error('Error log received:', validatedData);
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    console.error('Failed to process log:', error);
     return NextResponse.json({ error: 'Failed to process log' }, { status: 500 });
   }
 }

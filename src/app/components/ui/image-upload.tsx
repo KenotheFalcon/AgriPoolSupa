@@ -44,7 +44,6 @@ export function ImageUpload({
         await onUpload(file);
         toast.success('Image uploaded successfully');
       } catch (error) {
-        console.error('Upload failed:', error);
         toast.error('Failed to upload image');
         setPreview(null);
       } finally {

@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: error.errors }, { status: 400 });
     }
 
-    console.error('Password reset request error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -60,7 +59,6 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid input', details: error.errors }, { status: 400 });
     }
 
-    console.error('Password reset error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

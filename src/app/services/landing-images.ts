@@ -77,7 +77,6 @@ class LandingImageService {
         order,
       };
     } catch (error: any) {
-      console.error('Error uploading landing image:', error);
       throw new Error(error.message);
     }
   }

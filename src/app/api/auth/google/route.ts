@@ -59,7 +59,6 @@ export async function POST() {
       },
     });
   } catch (error: any) {
-    console.error('Google sign in error:', error);
     return NextResponse.json(
       { error: error.message || 'Failed to sign in with Google' },
       { status: 500 }
