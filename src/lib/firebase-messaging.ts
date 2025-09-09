@@ -1,53 +1,22 @@
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { app } from './firebase'; // Your existing firebase app initialization
+// Temporary stub for Firebase messaging functionality
+// TODO: Implement push notifications with Supabase Edge Functions
 
 export const getFCMToken = async () => {
-  if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-    try {
-      const messaging = getMessaging(app);
-
-      const firebaseConfig = {
-        apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-        authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-        storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-        appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-      };
-
-      const queryParams = new URLSearchParams(firebaseConfig).toString();
-
-      const serviceWorkerRegistration = await navigator.serviceWorker.register(
-        `/firebase-messaging-sw.js?${queryParams}`
-      );
-
-      // IMPORTANT: You need a firebase-messaging-sw.js file in your public directory
-      const currentToken = await getToken(messaging, {
-        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        serviceWorkerRegistration,
-      });
-
-      if (currentToken) {
-        console.log('FCM Token:', currentToken);
-        return currentToken;
-      } else {
-        console.log('No registration token available. Request permission to generate one.');
-        return null;
-      }
-    } catch (err) {
-      console.error('An error occurred while retrieving token. ', err);
-      return null;
-    }
-  }
+  console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
   return null;
 };
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    if (typeof window !== 'undefined') {
-      const messaging = getMessaging(app);
-      onMessage(messaging, (payload) => {
-        resolve(payload);
-      });
-    }
-  });
+export const requestNotificationPermission = async () => {
+  console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
+  return false;
+};
+
+export const onNotificationMessage = (callback: any) => {
+  console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
+  return () => {};
+};
+
+export const onMessageListener = () => {
+  console.warn('Firebase messaging not implemented. Use Supabase Edge Functions for push notifications.');
+  return Promise.resolve();
+};
