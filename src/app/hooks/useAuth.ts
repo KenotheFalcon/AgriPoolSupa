@@ -3,22 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { auth } from '@/lib/firebase';
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  sendPasswordResetEmail,
-  onAuthStateChanged,
-  User as FirebaseUser,
-} from 'firebase/auth';
+import { supabase } from '@/lib/supabase/client';
+import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
+import type { UserRole } from '@/lib/supabase/types';
 
 interface User {
   id: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
-  role: 'admin' | 'user';
+  displayName?: string;
+  role: UserRole;
   emailVerified: boolean;
 }
 
@@ -26,6 +19,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  session: Session | null;
 }
 
 export function useAuth() {
@@ -33,72 +27,100 @@ export function useAuth() {
     user: null,
     loading: true,
     error: null,
+    session: null,
   });
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          // Get user data from Firestore
-          const response = await fetch(`/api/users/${firebaseUser.uid}`);
-          if (response.ok) {
-            const userData = await response.json();
-            setState({
-              user: {
-                id: firebaseUser.uid,
-                email: firebaseUser.email!,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                role: userData.role,
-                emailVerified: firebaseUser.emailVerified,
-              },
-              loading: false,
-              error: null,
-            });
-          } else {
-            throw new Error('Failed to fetch user data');
-          }
-        } catch (error) {
-          setState({
-            user: null,
-            loading: false,
-            error: 'Failed to fetch user data',
-          });
-        }
-      } else {
-        setState({ user: null, loading: false, error: null });
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Error getting session:', error);
+        setState(prev => ({ ...prev, loading: false, error: error.message }));
+        return;
       }
-    });
 
-    return () => unsubscribe();
+      if (session?.user) {
+        await loadUserProfile(session.user, session);
+      } else {
+        setState(prev => ({ ...prev, loading: false }));
+      }
+    };
+
+    getInitialSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          await loadUserProfile(session.user, session);
+        } else if (event === 'SIGNED_OUT') {
+          setState({ user: null, loading: false, error: null, session: null });
+        } else if (event === 'TOKEN_REFRESHED' && session) {
+          setState(prev => ({ ...prev, session }));
+        }
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
+  const loadUserProfile = async (supabaseUser: SupabaseUser, session: Session) => {
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', supabaseUser.id)
+        .single();
+
+      if (error) {
+        console.error('Error loading profile:', error);
+        setState(prev => ({ ...prev, loading: false, error: 'Failed to load profile' }));
+        return;
+      }
+
+      setState({
+        user: {
+          id: supabaseUser.id,
+          email: supabaseUser.email!,
+          displayName: profile?.display_name,
+          role: profile?.role || 'user',
+          emailVerified: supabaseUser.email_confirmed_at ? true : false,
+        },
+        loading: false,
+        error: null,
+        session,
+      });
+    } catch (error: any) {
+      setState(prev => ({ 
+        ...prev, 
+        loading: false, 
+        error: error.message || 'Failed to load user profile' 
+      }));
+    }
+  };
 
   const login = async (email: string, password: string) => {
     try {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
+      setState(prev => ({ ...prev, loading: true, error: null }));
 
-      // Sign in with Firebase
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      // Create session
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          password,
-          userAgent: navigator.userAgent,
-        }),
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to create session');
+      if (error) {
+        throw error;
       }
 
+      // Profile will be loaded by the auth state change listener
       router.push('/dashboard');
     } catch (error: any) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         loading: false,
         error: error.message || 'Login failed',
@@ -107,36 +129,32 @@ export function useAuth() {
     }
   };
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (email: string, password: string, displayName: string) => {
     try {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
+      setState(prev => ({ ...prev, loading: true, error: null }));
 
-      // Create user in Firebase
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Create user profile
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, name }),
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            display_name: displayName,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create user profile');
+      if (error) {
+        throw error;
       }
 
-      // Show success message
       toast.success(
-        data.message ||
-          'Account created successfully. Please check your email to verify your account.'
+        'Account created successfully! Please check your email to verify your account.'
       );
 
-      // Redirect to sign in page
-      router.push('/auth/signin');
+      router.push('/auth/login');
     } catch (error: any) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         loading: false,
         error: error.message || 'Signup failed',
@@ -147,11 +165,17 @@ export function useAuth() {
 
   const logout = async () => {
     try {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
-      await signOut(auth);
-      router.push('/auth/signin');
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        throw error;
+      }
+      
+      router.push('/auth/login');
     } catch (error: any) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         loading: false,
         error: error.message || 'Logout failed',
@@ -162,11 +186,20 @@ export function useAuth() {
 
   const forgotPassword = async (email: string) => {
     try {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
-      await sendPasswordResetEmail(auth, email);
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      setState(prev => ({ ...prev, loading: false }));
       return true;
     } catch (error: any) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         loading: false,
         error: error.message || 'Failed to send password reset email',
@@ -175,30 +208,49 @@ export function useAuth() {
     }
   };
 
-  const resetPassword = async (token: string, newPassword: string) => {
+  const resetPassword = async (newPassword: string) => {
     try {
-      setState((prev) => ({ ...prev, loading: true, error: null }));
+      setState(prev => ({ ...prev, loading: true, error: null }));
 
-      // Call the API to reset password
-      const response = await fetch('/api/auth/password-reset', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, password: newPassword }),
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to reset password');
+      if (error) {
+        throw error;
       }
 
-      setState((prev) => ({ ...prev, loading: false, error: null }));
+      setState(prev => ({ ...prev, loading: false, error: null }));
       return true;
     } catch (error: any) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         loading: false,
         error: error.message || 'Failed to reset password',
+      }));
+      throw error;
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      
+      if (error) {
+        throw error;
+      }
+    } catch (error: any) {
+      setState(prev => ({
+        ...prev,
+        loading: false,
+        error: error.message || 'Google sign-in failed',
       }));
       throw error;
     }
@@ -211,5 +263,6 @@ export function useAuth() {
     logout,
     forgotPassword,
     resetPassword,
+    signInWithGoogle,
   };
 }

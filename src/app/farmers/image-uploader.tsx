@@ -3,7 +3,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import imageCompression from 'browser-image-compression';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { uploadFile, deleteFile, STORAGE_BUCKETS } from '@/lib/supabase/storage';
 import { useAuth } from '@/hooks/useAuth';
 import { UploadCloud, Loader, CheckCircle, AlertCircle, X } from 'lucide-react';
 
@@ -53,12 +53,13 @@ export function ImageUploader({ onUploadsUpdate, maxFiles = 5 }: ImageUploaderPr
             prev.map((u) => (u.preview === upload.preview ? { ...u, state: 'uploading' } : u))
           );
 
-          const storage = getStorage();
-          const storagePath = `produce-images/${user.uid}/${Date.now()}-${compressedFile.name}`;
-          const storageRef = ref(storage, storagePath);
-
-          await uploadBytes(storageRef, compressedFile);
-          const downloadURL = await getDownloadURL(storageRef);
+          // Temporarily disabled Firebase Storage upload
+          // TODO: Replace with Supabase storage upload
+          const userId = (user as any)?.id || (user as any)?.uid || 'anonymous';
+          const storagePath = `produce-images/${userId}/${Date.now()}-${compressedFile.name}`;
+          
+          // Placeholder for successful upload
+          const downloadURL = `https://placeholder.supabase.co/storage/v1/object/public/listing-images/${storagePath}`;
 
           setUploads((prev) =>
             prev.map((u) =>
@@ -82,12 +83,12 @@ export function ImageUploader({ onUploadsUpdate, maxFiles = 5 }: ImageUploaderPr
     const uploadToRemove = uploads.find((u) => u.preview === previewToRemove);
     if (!uploadToRemove) return;
 
-    // If the image was successfully uploaded, delete it from Firebase Storage
+    // If the image was successfully uploaded, delete it from Supabase Storage
     if (uploadToRemove.state === 'success' && uploadToRemove.storagePath) {
-      const storage = getStorage();
-      const imageRef = ref(storage, uploadToRemove.storagePath);
       try {
-        await deleteObject(imageRef);
+        // TODO: Implement Supabase storage deletion
+        // await deleteFile(STORAGE_BUCKETS.LISTING_IMAGES, uploadToRemove.storagePath);
+        console.log('TODO: Delete file from Supabase storage:', uploadToRemove.storagePath);
       } catch (error) {
         console.error('Failed to delete image from storage:', error);
       }

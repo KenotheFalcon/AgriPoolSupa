@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import { db } from '@/lib/firebase';
-import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
+// Temporarily disabled Firebase imports
+// TODO: Implement chat with Supabase realtime
+// import { collection, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 import { sendMessage } from './actions';
 import { ServerUser } from '@/lib/auth/server';
 import { Button } from '@/components/ui/button';

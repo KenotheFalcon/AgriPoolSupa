@@ -1,87 +1,98 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getAdminAuth } from './lib/firebase-admin';
+import { NextRequest } from 'next/server'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const sessionCookie = request.cookies.get('session')?.value;
-  const { pathname } = request.nextUrl;
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  })
 
-  const headers = new Headers(request.headers);
-  headers.set('x-pathname', pathname);
-
-  // Define public paths that don't require authentication
-  const publicPaths = ['/', '/about', '/contact', '/auth/forgot-password', '/auth/reset-password'];
-
-  // Authentication routes
-  const authRoutes = ['/auth/signin', '/auth/signup'];
-
-  // API routes that don't require authentication
-  const publicApiRoutes = ['/api/auth/signin', '/api/auth/signup'];
-
-  // If the path is a public path, an auth route, or a public API route, let the request through.
-  if (
-    publicPaths.includes(pathname) ||
-    authRoutes.includes(pathname) ||
-    publicApiRoutes.some((route) => pathname.startsWith(route)) ||
-    pathname.startsWith('/_next/') ||
-    pathname.startsWith('/static') ||
-    pathname.endsWith('.ico') ||
-    pathname.endsWith('.png')
-  ) {
-    return NextResponse.next({
-      request: {
-        headers,
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          })
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          })
+          response.cookies.set({
+            name,
+            value: '',
+            ...options,
+          })
+        },
       },
-    });
-  }
-
-  if (!sessionCookie) {
-    // For API routes, return a 401 Unauthorized response
-    if (pathname.startsWith('/api/')) {
-      return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' },
-      });
     }
-    // For other routes, redirect to the sign-in page
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/signin';
-    return NextResponse.redirect(url);
+  )
+
+  // Get user session
+  const { data: { user } } = await supabase.auth.getUser()
+
+  // Protected routes that require authentication
+  const protectedRoutes = ['/dashboard', '/admin', '/profile', '/listings/new']
+  const adminRoutes = ['/admin']
+  const pathname = request.nextUrl.pathname
+
+  // Check if current path is protected
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
+  const isAdminRoute = adminRoutes.some(route => pathname.startsWith(route))
+
+  // Redirect to login if accessing protected route without auth
+  if (isProtectedRoute && !user) {
+    const redirectUrl = new URL('/auth/login', request.url)
+    redirectUrl.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(redirectUrl)
   }
 
-  try {
-    const adminAuth = await getAdminAuth();
-    const decodedToken = await adminAuth.verifySessionCookie(sessionCookie, true);
-    const userRole = decodedToken.role;
+  // Check admin access
+  if (isAdminRoute && user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
 
-    if (pathname.startsWith('/admin')) {
-      if (userRole !== 'support') {
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    } else if (pathname.startsWith('/dashboard')) {
-      if (userRole !== 'buyer') {
-        return NextResponse.redirect(new URL('/auth/signin', request.url));
-      }
-    } else if (pathname.startsWith('/farmers')) {
-      if (userRole !== 'farmer') {
-        return NextResponse.redirect(new URL('/auth/signin', request.url));
-      }
+    if (!profile || !['admin', 'support'].includes(profile.role)) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
-
-    // For API routes, you can add role checks here too if needed
-
-    return NextResponse.next({
-      request: {
-        headers,
-      },
-    });
-  } catch (error) {
-    console.error('Middleware error:', error);
-    // If cookie verification fails, redirect to sign-in
-    const url = request.nextUrl.clone();
-    url.pathname = '/auth/signin';
-    return NextResponse.redirect(url);
   }
+
+  // Redirect authenticated users away from auth pages
+  if (user && pathname.startsWith('/auth/')) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  return response
 }
 
 export const config = {
@@ -91,7 +102,8 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - public files (public folder)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico|public|api).*)',
   ],
-};
+}

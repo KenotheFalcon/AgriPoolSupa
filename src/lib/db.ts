@@ -1,54 +1,104 @@
-import { db } from './firebase';
-import { doc, getDoc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import type { UserProfile, UpdateProfileData } from './types';
+import { supabase } from './supabase/client';
+import { supabaseAdmin } from './supabase/admin';
+import type { Database } from './supabase/types';
 
-const COLLECTION_NAME = 'users';
+type Profile = Database['public']['Tables']['profiles']['Row'];
+type ProfileInsert = Database['public']['Tables']['profiles']['Insert'];
+type ProfileUpdate = Database['public']['Tables']['profiles']['Update'];
 
-export async function createUserProfile(uid: string, email: string): Promise<UserProfile> {
-  const userRef = doc(db, COLLECTION_NAME, uid);
-  const userData: UserProfile = {
-    uid,
-    email,
-    displayName: null,
-    photoURL: null,
-    preferences: {
-      theme: 'system',
-      notifications: true,
-      language: 'en',
-    },
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
+export async function createUserProfile(uid: string, email: string, displayName?: string): Promise<Profile | null> {
+  try {
+    const { data, error } = await supabaseAdmin
+      .from('profiles')
+      .insert({
+        id: uid,
+        email,
+        display_name: displayName || email.split('@')[0],
+        email_verified: false,
+        role: 'user',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
 
-  await setDoc(userRef, {
-    ...userData,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
+    if (error) {
+      console.error('Error creating user profile:', error);
+      return null;
+    }
 
-  return userData;
-}
-
-export async function getUserProfile(uid: string): Promise<UserProfile | null> {
-  const userRef = doc(db, COLLECTION_NAME, uid);
-  const userSnap = await getDoc(userRef);
-
-  if (!userSnap.exists()) {
+    return data;
+  } catch (error) {
+    console.error('Error creating user profile:', error);
     return null;
   }
-
-  return userSnap.data() as UserProfile;
 }
 
-export async function updateUserProfile(uid: string, data: UpdateProfileData): Promise<void> {
-  const userRef = doc(db, COLLECTION_NAME, uid);
-  await updateDoc(userRef, {
-    ...data,
-    updatedAt: serverTimestamp(),
-  });
+export async function getUserProfile(uid: string): Promise<Profile | null> {
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', uid)
+      .single();
+
+    if (error) {
+      console.error('Error getting user profile:', error);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error getting user profile:', error);
+    return null;
+  }
 }
 
-export async function deleteUserProfile(uid: string): Promise<void> {
-  const userRef = doc(db, COLLECTION_NAME, uid);
-  await setDoc(userRef, { deleted: true, updatedAt: serverTimestamp() });
+export async function updateUserProfile(uid: string, updateData: Partial<ProfileUpdate>): Promise<Profile | null> {
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({
+        ...updateData,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', uid)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating user profile:', error);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    return null;
+  }
+}
+
+// Legacy compatibility - will be removed
+export interface UserProfile {
+  uid: string;
+  email: string;
+  displayName: string | null;
+  photoURL: string | null;
+  preferences: {
+    theme: string;
+    notifications: boolean;
+    language: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpdateProfileData {
+  displayName?: string;
+  photoURL?: string;
+  preferences?: {
+    theme?: string;
+    notifications?: boolean;
+    language?: string;
+  };
 }
