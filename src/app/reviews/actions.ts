@@ -14,7 +14,7 @@ const SubmitReviewSchema = z.object({
   reviewText: z.string().min(10, 'Review must be at least 10 characters.').max(1000),
 });
 
-export async function submitReview(formData: FormData) {
+export async function submitReview(prevState: any, formData: FormData) {
   try {
     const user = await requireRole('buyer');
 

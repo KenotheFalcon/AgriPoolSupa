@@ -11,7 +11,7 @@ const SendMessageSchema = z.object({
   audio: z.instanceof(File).optional(),
 });
 
-export async function sendMessage(formData: FormData) {
+export async function sendMessage(prevState: any, formData: FormData) {
   try {
     const user = await requireAuth();
 
@@ -51,9 +51,10 @@ export async function sendMessage(formData: FormData) {
 
     let audioUrl: string | null = null;
     if (audio) {
-      const storage = getAdminStorage().bucket();
+      const storage = await getAdminStorage();
+      const bucket = storage.bucket();
       const filePath = `voice-messages/${groupId}/${Date.now()}.webm`;
-      const file = storage.file(filePath);
+      const file = bucket.file(filePath);
 
       const buffer = Buffer.from(await audio.arrayBuffer());
       await file.save(buffer, {

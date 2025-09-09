@@ -15,7 +15,12 @@ export const getFCMToken = async () => {
         appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
       };
 
-      const queryParams = new URLSearchParams(firebaseConfig).toString();
+      const queryParams = new URLSearchParams(
+        Object.entries(firebaseConfig).reduce((acc, [key, value]) => {
+          if (value) acc[key] = value;
+          return acc;
+        }, {} as Record<string, string>)
+      ).toString();
 
       const serviceWorkerRegistration = await navigator.serviceWorker.register(
         `/firebase-messaging-sw.js?${queryParams}`

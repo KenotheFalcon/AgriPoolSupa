@@ -1,66 +1,74 @@
-const CACHE_NAME = 'agripool-cache-v1';
-const OFFLINE_URL = '/offline.html';
+// Optimized Service Worker for AgriPool NG
+const CACHE_NAME = 'agripool-v1.0.0';
+const STATIC_CACHE_NAME = 'agripool-static-v1';
+const DYNAMIC_CACHE_NAME = 'agripool-dynamic-v1';
 
-const STATIC_ASSETS = ['/', '/offline.html', '/manifest.json', '/favicon.ico', '/images/logo.png'];
+const STATIC_ASSETS = [
+  '/',
+  '/offline',
+  '/manifest.json',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(STATIC_CACHE_NAME);
       await cache.addAll(STATIC_ASSETS);
-      await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }));
+      self.skipWaiting();
     })()
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
-      if ('navigationPreload' in self.registration) {
-        await self.registration.navigationPreload.enable();
-      }
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames.map(async (cacheName) => {
+          if (!cacheName.includes('agripool')) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+      self.clients.claim();
     })()
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      (async () => {
-        try {
-          const preloadResponse = await event.preloadResponse;
-          if (preloadResponse) {
-            return preloadResponse;
+  if (event.request.method !== 'GET') return;
+  
+  event.respondWith(
+    (async () => {
+      try {
+        // Network first for API calls
+        if (event.request.url.includes('/api/')) {
+          const response = await fetch(event.request);
+          if (response.ok) {
+            const cache = await caches.open(DYNAMIC_CACHE_NAME);
+            cache.put(event.request, response.clone());
           }
-
-          const networkResponse = await fetch(event.request);
-          return networkResponse;
-        } catch (error) {
-          const cache = await caches.open(CACHE_NAME);
-          const cachedResponse = await cache.match(OFFLINE_URL);
-          return cachedResponse;
+          return response;
         }
-      })()
-    );
-  } else if (event.request.destination === 'image') {
-    event.respondWith(
-      (async () => {
-        const cache = await caches.open(CACHE_NAME);
+        
+        // Cache first for static assets
+        const cache = await caches.open(STATIC_CACHE_NAME);
         const cachedResponse = await cache.match(event.request);
+        
         if (cachedResponse) {
           return cachedResponse;
         }
-
-        try {
-          const networkResponse = await fetch(event.request);
-          await cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        } catch (error) {
-          return new Response('', { status: 404 });
+        
+        return await fetch(event.request);
+      } catch (error) {
+        if (event.request.destination === 'document') {
+          const cache = await caches.open(STATIC_CACHE_NAME);
+          return cache.match('/offline') || new Response('Offline');
         }
-      })()
-    );
-  }
+        return new Response('Network Error', { status: 503 });
+      }
+    })()
+  );
 });

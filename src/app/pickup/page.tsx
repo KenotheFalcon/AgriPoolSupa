@@ -36,7 +36,7 @@ interface Listing {
 async function getOrderDetails(
   orderId: string,
   userId: string
-): Promise<{ order: Order; group: GroupBuy; listing: Listing } | null> {
+): Promise<{ order: Order; group: GroupBuy; listing: Listing; hasReviewed: boolean } | null> {
   const db = await getAdminFirestore();
   const orderRef = db.collection('orders').doc(orderId);
   const orderDoc = await orderRef.get();

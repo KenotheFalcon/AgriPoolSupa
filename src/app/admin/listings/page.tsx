@@ -17,7 +17,7 @@ async function getAllListings() {
     .collection('produceListings')
     .orderBy('createdAt', 'desc')
     .get();
-  return listingsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return listingsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as any));
 }
 
 export default async function AdminListingsPage() {
