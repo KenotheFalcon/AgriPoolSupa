@@ -40,12 +40,12 @@ export default async function AdminGroupsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {groups.map((group) => (
+            {groups.map((group: any) => (
               <TableRow key={group.id}>
-                <TableCell className='font-medium'>{group.produceName}</TableCell>
+                <TableCell className='font-medium'>{group.produceName || 'N/A'}</TableCell>
                 <TableCell>
                   <Badge variant={group.status === 'completed' ? 'default' : 'secondary'}>
-                    {group.status.replace(/_/g, ' ')}
+                    {group.status?.replace(/_/g, ' ') || 'Unknown'}
                   </Badge>
                 </TableCell>
                 <TableCell>

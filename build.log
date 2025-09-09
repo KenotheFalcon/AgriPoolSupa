@@ -1,0 +1,473 @@
+
+> nextjs@0.1.0 build
+> next build
+
+   ▲ Next.js 14.1.0
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: /home/runner/work/AgriPoolSupa/AgriPoolSupa/node_modules/next-pwa/register.js
+> [PWA] Service worker: /home/runner/work/AgriPoolSupa/AgriPoolSupa/public/sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/(protected)/dashboard/dashboard-client.tsx
+22:7  Warning: 'recentActivity' is assigned a value but never used.  no-unused-vars
+
+./src/app/(protected)/layout.tsx
+121:68  Warning: Replace `·user?.email?.[0]?.toUpperCase()·||` with `⏎····························user?.email?.[0]?.toUpperCase()·||⏎···························`  prettier/prettier
+
+./src/app/about/page.tsx
+69:94  Warning: Delete `·landscape·by`  prettier/prettier
+70:16  Warning: Replace `·creating·a·sustainable·ecosystem·that·benefits·both·farmers·and·consumers.·We` with `·landscape·by·creating·a·sustainable·ecosystem·that·benefits·both·farmers·and`  prettier/prettier
+71:16  Warning: Replace `·believe·in·the·power·of·community-driven·agriculture·and·the·importance·of` with `·consumers.·We·believe·in·the·power·of·community-driven·agriculture·and·the`  prettier/prettier
+72:16  Warning: Replace `·supporting·local·farmers·while·providing·access·to·fresh,·quality` with `·importance·of·supporting·local·farmers·while·providing·access·to·fresh,·quality⏎···············`  prettier/prettier
+
+./src/app/admin/actions.ts
+81:11  Warning: 'notificationRef' is assigned a value but never used.  no-unused-vars
+
+./src/app/admin/dashboard/admin-chart.tsx
+19:37  Warning: 'parseISO' is defined but never used.  no-unused-vars
+
+./src/app/admin/groups/page.tsx
+2:23  Warning: 'ServerUser' is defined but never used.  no-unused-vars
+
+./src/app/admin/monitoring/page.tsx
+6:10  Warning: 'monitoringService' is defined but never used.  no-unused-vars
+7:10  Warning: 'performanceMonitor' is defined but never used.  no-unused-vars
+50:7  Warning: Unexpected console statement.  no-console
+60:7  Warning: Unexpected console statement.  no-console
+
+./src/app/admin/users/page.tsx
+1:24  Warning: 'getAdminFirestore' is defined but never used.  no-unused-vars
+
+./src/app/api/admin/users/[id]/route.ts
+23:5  Warning: Unexpected console statement.  no-console
+55:5  Warning: Unexpected console statement.  no-console
+75:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/admin/users/route.ts
+43:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/analytics/performance/route.ts
+14:5  Warning: Unexpected console statement.  no-console
+41:7  Warning: Unexpected console statement.  no-console
+47:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/forgot-password/route.ts
+32:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/google/route.ts
+62:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/logout/route.ts
+11:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/me/route.ts
+14:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/password-reset/route.ts
+35:5  Warning: Unexpected console statement.  no-console
+63:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/route.ts
+56:5  Warning: Unexpected console statement.  no-console
+90:5  Warning: Unexpected console statement.  no-console
+111:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/session/route.ts
+37:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/signup/route.ts
+83:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/verify/route.ts
+22:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/auth/verify-email/route.ts
+33:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/dashboard/route.ts
+5:33  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/app/api/logs/route.ts
+3:15  Warning: 'LogEntry' is defined but never used.  no-unused-vars
+20:5  Warning: Unexpected console statement.  no-console
+24:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/metrics/route.ts
+11:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/monitoring/alerts/route.ts
+35:7  Warning: Unexpected console statement.  no-console
+67:7  Warning: Unexpected console statement.  no-console
+104:7  Warning: Unexpected console statement.  no-console
+128:7  Warning: Unexpected console statement.  no-console
+
+./src/app/api/monitoring/metrics/route.ts
+42:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/payments/verify/route.ts
+83:5  Warning: Unexpected console statement.  no-console
+
+./src/app/api/test/firebase/route.ts
+45:5  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/forgot-password/page.tsx
+106:21  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/auth/page.tsx
+62:9  Warning: 'handleForgotPassword' is assigned a value but never used.  no-unused-vars
+
+./src/app/auth/signin/signin-form.tsx
+27:9  Warning: 'router' is assigned a value but never used.  no-unused-vars
+107:14  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/auth/signup/page.tsx
+38:9  Warning: 'router' is assigned a value but never used.  no-unused-vars
+
+./src/app/chat/actions.ts
+79:5  Warning: Unexpected console statement.  no-console
+
+./src/app/chat/audio-recorder.tsx
+10:25  Warning: 'blob' is defined but never used.  no-unused-vars
+37:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/admin/users-table.tsx
+47:9  Warning: 'router' is assigned a value but never used.  no-unused-vars
+
+./src/app/components/landing-image-manager.tsx
+3:10  Warning: 'useState' is defined but never used.  no-unused-vars
+11:5  Warning: 'section' is defined but never used.  no-unused-vars
+12:5  Warning: 'images' is defined but never used.  no-unused-vars
+
+./src/app/components/profile/profile-form.tsx
+46:7  Warning: Unexpected console statement.  no-console
+
+./src/app/components/ui/image-upload.tsx
+6:10  Warning: 'storageService' is defined but never used.  no-unused-vars
+7:10  Warning: 'ImagePlus' is defined but never used.  no-unused-vars
+7:21  Warning: 'X' is defined but never used.  no-unused-vars
+8:8  Warning: 'Image' is defined but never used.  no-unused-vars
+12:14  Warning: 'file' is defined but never used.  no-unused-vars
+47:9  Warning: Unexpected console statement.  no-console
+
+./src/app/components/ui/landing-image-upload.tsx
+32:22  Warning: 'images' is defined but never used.  no-unused-vars
+
+./src/app/components/ui/progressive-image.tsx
+21:3  Warning: 'src' is defined but never used.  no-unused-vars
+
+./src/app/contact/page.tsx
+44:5  Warning: Unexpected console statement.  no-console
+63:48  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+63:90  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/dashboard/group-buy-modal.tsx
+70:6  Warning: React Hook useEffect has a missing dependency: 'handleState'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+73:6  Warning: React Hook useEffect has a missing dependency: 'handleState'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/location-sharer.tsx
+3:10  Warning: 'useEffect' is defined but never used.  no-unused-vars
+9:34  Warning: 'user' is defined but never used.  no-unused-vars
+37:8  Warning: 'error' is defined but never used.  no-unused-vars
+
+./src/app/dashboard/my-orders.tsx
+38:37  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/farmers/actions.ts
+5:29  Warning: 'getAdminAuth' is defined but never used.  no-unused-vars
+7:10  Warning: 'geocodeAddress' is defined but never used.  no-unused-vars
+81:5  Warning: Unexpected console statement.  no-console
+119:5  Warning: Unexpected console statement.  no-console
+
+./src/app/farmers/image-uploader.tsx
+19:21  Warning: 'urls' is defined but never used.  no-unused-vars
+71:11  Warning: Unexpected console statement.  no-console
+92:9  Warning: Unexpected console statement.  no-console
+
+./src/app/farmers/map-picker.tsx
+18:22  Warning: 'location' is defined but never used.  no-unused-vars
+
+./src/app/farmers/verification/page.tsx
+46:48  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+46:64  Warning: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/hooks/useAuth.ts
+13:11  Warning: 'FirebaseUser' is defined but never used.  no-unused-vars
+82:13  Warning: 'userCredential' is assigned a value but never used.  no-unused-vars
+115:13  Warning: 'userCredential' is assigned a value but never used.  no-unused-vars
+
+./src/app/lib/auth/service.ts
+4:10  Warning: 'cookies' is defined but never used.  no-unused-vars
+5:10  Warning: 'NextRequest' is defined but never used.  no-unused-vars
+6:10  Warning: 'emailService' is defined but never used.  no-unused-vars
+93:7  Warning: Unexpected console statement.  no-console
+146:7  Warning: Unexpected console statement.  no-console
+189:7  Warning: Unexpected console statement.  no-console
+199:7  Warning: Unexpected console statement.  no-console
+221:7  Warning: Unexpected console statement.  no-console
+232:7  Warning: Unexpected console statement.  no-console
+244:7  Warning: Unexpected console statement.  no-console
+249:46  Warning: 'permission' is defined but never used.  no-unused-vars
+267:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/db/backup.ts
+151:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/db/config.ts
+59:3  Warning: Unexpected console statement.  no-console
+63:3  Warning: Unexpected console statement.  no-console
+73:5  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/db/monitoring.ts
+16:12  Warning: 'code' is defined but never used.  no-unused-vars
+
+./src/app/lib/email/service.ts
+60:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/middleware/email-rate-limit.ts
+3:10  Warning: 'rateLimiter' is defined but never used.  no-unused-vars
+16:13  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/app/lib/middleware/rate-limit.ts
+3:10  Warning: 'dbPool' is defined but never used.  no-unused-vars
+122:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/middleware/require-verified-email.ts
+5:13  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/app/lib/middleware/with-auth.ts
+12:37  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/app/lib/monitoring.ts
+3:19  Warning: 'DbAlert' is defined but never used.  no-unused-vars
+5:10  Warning: 'notificationService' is defined but never used.  no-unused-vars
+133:7  Warning: Unexpected console statement.  no-console
+190:7  Warning: Unexpected console statement.  no-console
+228:7  Warning: Unexpected console statement.  no-console
+252:7  Warning: Unexpected console statement.  no-console
+270:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/notifications.ts
+78:7  Warning: Unexpected console statement.  no-console
+157:5  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/performance-monitor.ts
+108:7  Warning: Unexpected console statement.  no-console
+
+./src/app/lib/performance.ts
+3:10  Warning: 'monitoringService' is defined but never used.  no-unused-vars
+45:7  Warning: Unexpected console statement.  no-console
+70:7  Warning: Unexpected console statement.  no-console
+95:7  Warning: Unexpected console statement.  no-console
+
+./src/app/offline/page.tsx
+7:64  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+9:26  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/page.tsx
+7:9  Warning: Delete `·`  prettier/prettier
+8:23  Warning: Delete `·`  prettier/prettier
+9:27  Warning: Delete `·`  prettier/prettier
+10:21  Warning: Replace `·` with `,`  prettier/prettier
+18:21  Warning: Delete `·`  prettier/prettier
+20:17  Warning: Replace `"Connect·with·Local·Farmers"` with `'Connect·with·Local·Farmers'`  prettier/prettier
+21:23  Warning: Replace `"Buy·fresh,·quality·produce·directly·from·verified·local·farmers·in·your·area"` with `'Buy·fresh,·quality·produce·directly·from·verified·local·farmers·in·your·area'`  prettier/prettier
+22:19  Warning: Replace `"Get·Started"` with `'Get·Started'`  prettier/prettier
+23:19  Warning: Replace `"/auth/signup"` with `'/auth/signup'`  prettier/prettier
+34:25  Warning: Delete `·`  prettier/prettier
+35:17  Warning: Replace `"Why·Choose·AgriPool"` with `'Why·Choose·AgriPool'`  prettier/prettier
+36:23  Warning: Replace `"Direct·from·farm·to·table"` with `'Direct·from·farm·to·table'`  prettier/prettier
+41:82  Warning: Insert `,`  prettier/prettier
+46:88  Warning: Insert `,`  prettier/prettier
+51:87  Warning: Insert `,`  prettier/prettier
+52:14  Warning: Insert `,`  prettier/prettier
+59:20  Warning: Delete `·`  prettier/prettier
+61:17  Warning: Replace `"Ready·to·Get·Started?"` with `'Ready·to·Get·Started?'`  prettier/prettier
+62:23  Warning: Replace `"Join·thousands·of·people·connecting·with·local·farmers"` with `'Join·thousands·of·people·connecting·with·local·farmers'`  prettier/prettier
+63:19  Warning: Replace `"Sign·Up·Today"` with `'Sign·Up·Today'`  prettier/prettier
+64:19  Warning: Replace `"/auth/signup"` with `'/auth/signup'`  prettier/prettier
+
+./src/app/payments/actions.ts
+111:5  Warning: Unexpected console statement.  no-console
+
+./src/app/pickup/page.tsx
+9:8  Warning: 'DynamicDisplayMap' is defined but never used.  no-unused-vars
+
+./src/app/profile/page.tsx
+26:5  Warning: Unexpected console statement.  no-console
+
+./src/app/reviews/review-form.tsx
+22:74  Warning: 'r' is defined but never used.  no-unused-vars
+
+./src/app/services/landing-images.ts
+65:11  Warning: 'settings' is assigned a value but never used.  no-unused-vars
+71:13  Warning: 'url' is assigned a value but never used.  no-unused-vars
+80:7  Warning: Unexpected console statement.  no-console
+
+./src/app/services/storage.ts
+26:7  Warning: Unexpected console statement.  no-console
+36:7  Warning: Unexpected console statement.  no-console
+
+./src/app/test-firebase.tsx
+14:9  Warning: Unexpected console statement.  no-console
+25:9  Warning: Unexpected console statement.  no-console
+26:9  Warning: Unexpected console statement.  no-console
+30:9  Warning: Unexpected console statement.  no-console
+35:9  Warning: Unexpected console statement.  no-console
+
+./src/components/admin/users-table.tsx
+47:17  Warning: 'setUsers' is assigned a value but never used.  no-unused-vars
+48:10  Warning: 'pagination' is assigned a value but never used.  no-unused-vars
+48:22  Warning: 'setPagination' is assigned a value but never used.  no-unused-vars
+53:5  Warning: Unexpected console statement.  no-console
+58:5  Warning: Unexpected console statement.  no-console
+63:5  Warning: Unexpected console statement.  no-console
+
+./src/components/dashboard/performance-metrics.tsx
+6:38  Warning: 'data' is defined but never used.  no-unused-vars
+
+./src/components/error-boundary.tsx
+26:5  Warning: Unexpected console statement.  no-console
+
+./src/components/home/featured-groups.tsx
+67:20  Warning: 'setLocation' is assigned a value but never used.  no-unused-vars
+
+./src/components/home/hero.tsx
+16:5  Warning: Unexpected console statement.  no-console
+
+./src/components/home/testimonials.tsx
+56:10  Warning: 'activeIndex' is assigned a value but never used.  no-unused-vars
+
+./src/components/landing/cta-section.tsx
+3:10  Warning: 'OptimizedImage' is defined but never used.  no-unused-vars
+4:10  Warning: 'Button' is defined but never used.  no-unused-vars
+8:11  Warning: 'CTASectionProps' is defined but never used.  no-unused-vars
+
+./src/components/landing/hero-section.tsx
+3:10  Warning: 'OptimizedImage' is defined but never used.  no-unused-vars
+20:3  Warning: 'title' is defined but never used.  no-unused-vars
+21:3  Warning: 'description' is defined but never used.  no-unused-vars
+22:3  Warning: 'image' is defined but never used.  no-unused-vars
+23:3  Warning: 'ctaText' is defined but never used.  no-unused-vars
+24:3  Warning: 'ctaLink' is defined but never used.  no-unused-vars
+
+./src/components/layout/navbar.tsx
+7:35  Warning: 'User' is defined but never used.  no-unused-vars
+9:3  Warning: 'DropdownMenu' is defined but never used.  no-unused-vars
+10:3  Warning: 'DropdownMenuContent' is defined but never used.  no-unused-vars
+11:3  Warning: 'DropdownMenuItem' is defined but never used.  no-unused-vars
+12:3  Warning: 'DropdownMenuSeparator' is defined but never used.  no-unused-vars
+13:3  Warning: 'DropdownMenuTrigger' is defined but never used.  no-unused-vars
+
+./src/components/profile/profile-form.tsx
+12:14  Warning: 'data' is defined but never used.  no-unused-vars
+57:7  Warning: Unexpected console statement.  no-console
+
+./src/components/providers/service-worker-registrar.tsx
+12:13  Warning: Unexpected console statement.  no-console
+15:13  Warning: Unexpected console statement.  no-console
+
+./src/components/ui/calendar.tsx
+50:25  Warning: 'props' is defined but never used.  no-unused-vars
+51:26  Warning: 'props' is defined but never used.  no-unused-vars
+
+./src/components/ui/carousel.tsx
+19:13  Warning: 'api' is defined but never used.  no-unused-vars
+
+./src/components/ui/chart.tsx
+12:4  Warning: 'k' is defined but never used.  no-unused-vars
+67:55  Warning: '_' is defined but never used.  no-unused-vars
+
+./src/components/ui/landing-image-upload.tsx
+11:14  Warning: 'value' is defined but never used.  no-unused-vars
+
+./src/hooks/use-toast.ts
+127:25  Warning: 'state' is defined but never used.  no-unused-vars
+
+./src/lib/auth/server.ts
+36:5  Warning: Unexpected console statement.  no-console
+58:35  Warning: Replace `requiredRole:·'buyer'·|·'farmer'·|·'support'` with `⏎··requiredRole:·'buyer'·|·'farmer'·|·'support'⏎`  prettier/prettier
+82:5  Warning: Unexpected console statement.  no-console
+
+./src/lib/auth/service.ts
+88:7  Warning: Unexpected console statement.  no-console
+142:7  Warning: Unexpected console statement.  no-console
+192:7  Warning: Unexpected console statement.  no-console
+202:7  Warning: Unexpected console statement.  no-console
+249:30  Warning: 'token' is defined but never used.  no-unused-vars
+249:45  Warning: 'newPassword' is defined but never used.  no-unused-vars
+251:13  Warning: 'auth' is assigned a value but never used.  no-unused-vars
+269:7  Warning: Unexpected console statement.  no-console
+280:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/firebase-messaging.ts
+31:9  Warning: Unexpected console statement.  no-console
+34:9  Warning: Unexpected console statement.  no-console
+38:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/firebase.ts
+10:3  Warning: 'User' is defined but never used.  no-unused-vars
+12:24  Warning: 'Firestore' is defined but never used.  no-unused-vars
+27:3  Warning: Unexpected console statement.  no-console
+
+./src/lib/flutterwave-client.ts
+71:7  Warning: Unexpected console statement.  no-console
+98:7  Warning: Unexpected console statement.  no-console
+118:7  Warning: Unexpected console statement.  no-console
+142:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/geo.ts
+10:5  Warning: Unexpected console statement.  no-console
+38:5  Warning: Unexpected console statement.  no-console
+45:5  Warning: Unexpected console statement.  no-console
+61:5  Warning: Unexpected console statement.  no-console
+
+./src/lib/hooks/use-user-profile.ts
+40:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/logger.ts
+50:7  Warning: Unexpected console statement.  no-console
+69:7  Warning: Unexpected console statement.  no-console
+
+./src/lib/middleware/auth.ts
+15:13  Warning: 'req' is defined but never used.  no-unused-vars
+16:3  Warning: 'options' is defined but never used.  no-unused-vars
+39:15  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/lib/middleware/with-auth.ts
+14:15  Warning: 'req' is defined but never used.  no-unused-vars
+14:42  Warning: 'context' is defined but never used.  no-unused-vars
+42:13  Warning: 'req' is defined but never used.  no-unused-vars
+42:40  Warning: 'context' is defined but never used.  no-unused-vars
+64:33  Warning: 'req' is defined but never used.  no-unused-vars
+
+./src/lib/monitoring.ts
+2:10  Warning: 'performanceMonitor' is defined but never used.  no-unused-vars
+
+./src/lib/service-worker.js
+3:44  Warning: 'NetworkFirst' is defined but never used.  no-unused-vars
+
+./src/pages/_document.js
+5:61  Warning: Insert `;`  prettier/prettier
+16:4  Warning: Insert `;`  prettier/prettier
+17:2  Warning: Insert `⏎`  prettier/prettier
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+Failed to compile.
+
+./src/app/admin/groups/page.tsx:45:59
+Type error: Property 'produceName' does not exist on type '{ id: string; }'.
+
+[0m [90m 43 |[39m             {groups[33m.[39mmap((group) [33m=>[39m ([0m
+[0m [90m 44 |[39m               [33m<[39m[33mTableRow[39m key[33m=[39m{group[33m.[39mid}[33m>[39m[0m
+[0m[31m[1m>[22m[39m[90m 45 |[39m                 [33m<[39m[33mTableCell[39m className[33m=[39m[32m'font-medium'[39m[33m>[39m{group[33m.[39mproduceName}[33m<[39m[33m/[39m[33mTableCell[39m[33m>[39m[0m
+[0m [90m    |[39m                                                           [31m[1m^[22m[39m[0m
+[0m [90m 46 |[39m                 [33m<[39m[33mTableCell[39m[33m>[39m[0m
+[0m [90m 47 |[39m                   [33m<[39m[33mBadge[39m variant[33m=[39m{group[33m.[39mstatus [33m===[39m [32m'completed'[39m [33m?[39m [32m'default'[39m [33m:[39m [32m'secondary'[39m}[33m>[39m[0m
+[0m [90m 48 |[39m                     {group[33m.[39mstatus[33m.[39mreplace([35m/_/g[39m[33m,[39m [32m' '[39m)}[0m

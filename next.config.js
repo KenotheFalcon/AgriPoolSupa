@@ -11,9 +11,16 @@ const path = require('path');
 const nextConfig = {
   webpack: (config, { isServer }) => {
     // Exclude the functions directory from webpack processing
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@/functions': false,
+    };
+    
+    // Ignore functions directory entirely
     config.watchOptions = {
       ignored: ['**/functions/**', '**/node_modules/**']
     };
+    
     return config;
   },
   // Exclude functions directory from builds
@@ -22,6 +29,10 @@ const nextConfig = {
       '*': ['./functions/**/*'],
     },
   },
+  // Add pageExtensions to ignore functions
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  // Transpile only src directory
+  transpilePackages: [],
 };
 
 module.exports = withPWA(nextConfig);

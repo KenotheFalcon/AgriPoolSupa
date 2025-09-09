@@ -43,10 +43,10 @@ export default async function AdminListingsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {listings.map((listing) => (
+              {listings.map((listing: any) => (
                 <TableRow key={listing.id}>
-                  <TableCell className='font-medium'>{listing.produceName}</TableCell>
-                  <TableCell>{listing.farmerName}</TableCell>
+                  <TableCell className='font-medium'>{listing.produceName || 'N/A'}</TableCell>
+                  <TableCell>{listing.farmerName || 'N/A'}</TableCell>
                   <TableCell>
                     <Badge
                       variant={
