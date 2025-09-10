@@ -8,11 +8,11 @@ export const signIn = async (email: string, password: string) => {
       email,
       password,
     });
-    
+
     if (error) {
       return { user: null, error: error.message };
     }
-    
+
     return { user: data.user, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };
@@ -24,14 +24,14 @@ export const signInWithGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`
-      }
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
+      },
     });
-    
+
     if (error) {
       return { user: null, error: error.message };
     }
-    
+
     return { user: data, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };
@@ -47,14 +47,14 @@ export const signUp = async (email: string, password: string, displayName?: stri
         data: {
           display_name: displayName,
         },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify`
-      }
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify`,
+      },
     });
-    
+
     if (error) {
       return { user: null, error: error.message };
     }
-    
+
     return { user: data.user, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };
@@ -64,11 +64,11 @@ export const signUp = async (email: string, password: string, displayName?: stri
 export const logOut = async () => {
   try {
     const { error } = await supabase.auth.signOut();
-    
+
     if (error) {
       return { error: error.message };
     }
-    
+
     return { error: null };
   } catch (error: any) {
     return { error: error.message };
@@ -78,13 +78,13 @@ export const logOut = async () => {
 export const resetPassword = async (email: string) => {
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`
+      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/reset-password`,
     });
-    
+
     if (error) {
       return { error: error.message };
     }
-    
+
     return { error: null };
   } catch (error: any) {
     return { error: error.message };
@@ -94,13 +94,13 @@ export const resetPassword = async (email: string) => {
 export const updatePassword = async (password: string) => {
   try {
     const { data, error } = await supabase.auth.updateUser({
-      password: password
+      password: password,
     });
-    
+
     if (error) {
       return { user: null, error: error.message };
     }
-    
+
     return { user: data.user, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };
@@ -113,14 +113,14 @@ export const resendConfirmation = async (email: string) => {
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify`
-      }
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify`,
+      },
     });
-    
+
     if (error) {
       return { error: error.message };
     }
-    
+
     return { error: null };
   } catch (error: any) {
     return { error: error.message };
@@ -130,12 +130,15 @@ export const resendConfirmation = async (email: string) => {
 // Server-side auth utilities
 export const getCurrentUser = async () => {
   try {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+
     if (error) {
       return { user: null, error: error.message };
     }
-    
+
     return { user, error: null };
   } catch (error: any) {
     return { user: null, error: error.message };

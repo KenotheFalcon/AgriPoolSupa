@@ -34,35 +34,38 @@ export function useAuth() {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
       if (error) {
         console.error('Error getting session:', error);
-        setState(prev => ({ ...prev, loading: false, error: error.message }));
+        setState((prev) => ({ ...prev, loading: false, error: error.message }));
         return;
       }
 
       if (session?.user) {
         await loadUserProfile(session.user, session);
       } else {
-        setState(prev => ({ ...prev, loading: false }));
+        setState((prev) => ({ ...prev, loading: false }));
       }
     };
 
     getInitialSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (event === 'SIGNED_IN' && session?.user) {
-          await loadUserProfile(session.user, session);
-        } else if (event === 'SIGNED_OUT') {
-          setState({ user: null, loading: false, error: null, session: null });
-        } else if (event === 'TOKEN_REFRESHED' && session) {
-          setState(prev => ({ ...prev, session }));
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        await loadUserProfile(session.user, session);
+      } else if (event === 'SIGNED_OUT') {
+        setState({ user: null, loading: false, error: null, session: null });
+      } else if (event === 'TOKEN_REFRESHED' && session) {
+        setState((prev) => ({ ...prev, session }));
       }
-    );
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -79,7 +82,7 @@ export function useAuth() {
 
       if (error) {
         console.error('Error loading profile:', error);
-        setState(prev => ({ ...prev, loading: false, error: 'Failed to load profile' }));
+        setState((prev) => ({ ...prev, loading: false, error: 'Failed to load profile' }));
         return;
       }
 
@@ -96,17 +99,17 @@ export function useAuth() {
         session,
       });
     } catch (error: any) {
-      setState(prev => ({ 
-        ...prev, 
-        loading: false, 
-        error: error.message || 'Failed to load user profile' 
+      setState((prev) => ({
+        ...prev,
+        loading: false,
+        error: error.message || 'Failed to load user profile',
       }));
     }
   };
 
   const login = async (email: string, password: string) => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState((prev) => ({ ...prev, loading: true, error: null }));
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -120,7 +123,7 @@ export function useAuth() {
       // Profile will be loaded by the auth state change listener
       router.push('/dashboard');
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Login failed',
@@ -131,7 +134,7 @@ export function useAuth() {
 
   const signup = async (email: string, password: string, displayName: string) => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState((prev) => ({ ...prev, loading: true, error: null }));
 
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -140,8 +143,8 @@ export function useAuth() {
           data: {
             display_name: displayName,
           },
-          emailRedirectTo: `${window.location.origin}/auth/callback`
-        }
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       });
 
       if (error) {
@@ -154,7 +157,7 @@ export function useAuth() {
 
       router.push('/auth/login');
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Signup failed',
@@ -165,17 +168,17 @@ export function useAuth() {
 
   const logout = async () => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      
+      setState((prev) => ({ ...prev, loading: true, error: null }));
+
       const { error } = await supabase.auth.signOut();
-      
+
       if (error) {
         throw error;
       }
-      
+
       router.push('/auth/login');
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Logout failed',
@@ -186,20 +189,20 @@ export function useAuth() {
 
   const forgotPassword = async (email: string) => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      
+      setState((prev) => ({ ...prev, loading: true, error: null }));
+
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`
+        redirectTo: `${window.location.origin}/auth/reset-password`,
       });
-      
+
       if (error) {
         throw error;
       }
-      
-      setState(prev => ({ ...prev, loading: false }));
+
+      setState((prev) => ({ ...prev, loading: false }));
       return true;
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Failed to send password reset email',
@@ -210,20 +213,20 @@ export function useAuth() {
 
   const resetPassword = async (newPassword: string) => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState((prev) => ({ ...prev, loading: true, error: null }));
 
       const { error } = await supabase.auth.updateUser({
-        password: newPassword
+        password: newPassword,
       });
 
       if (error) {
         throw error;
       }
 
-      setState(prev => ({ ...prev, loading: false, error: null }));
+      setState((prev) => ({ ...prev, loading: false, error: null }));
       return true;
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Failed to reset password',
@@ -234,20 +237,20 @@ export function useAuth() {
 
   const signInWithGoogle = async () => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }));
-      
+      setState((prev) => ({ ...prev, loading: true, error: null }));
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
-        }
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
       });
-      
+
       if (error) {
         throw error;
       }
     } catch (error: any) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         error: error.message || 'Google sign-in failed',

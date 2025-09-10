@@ -35,7 +35,7 @@ export function MyOrders({ ordersWithDetails }: { ordersWithDetails: any[] }) {
       <Card>
         <CardHeader>
           <CardTitle>My Orders</CardTitle>
-          <CardDescription>You haven't placed any orders yet.</CardDescription>
+          <CardDescription>You haven&apos;t placed any orders yet.</CardDescription>
         </CardHeader>
       </Card>
     );

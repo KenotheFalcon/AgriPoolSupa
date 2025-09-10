@@ -60,7 +60,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className='mt-6 text-lg text-muted-foreground'>
-              Have questions about AgriPool? We're here to help. Send us a message and we'll respond
+              Have questions about AgriPool? We&apos;re here to help. Send us a message and we&apos;ll respond
               as soon as possible.
             </p>
           </motion.div>

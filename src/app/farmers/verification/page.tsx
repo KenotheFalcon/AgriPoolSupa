@@ -43,7 +43,7 @@ export default async function FarmerVerificationPage() {
           <div>
             <CardTitle>Verification Status</CardTitle>
             <CardDescription>
-              Complete these steps to become a "Verified Farmer" and gain more trust from buyers.
+              Complete these steps to become a &ldquo;Verified Farmer&rdquo; and gain more trust from buyers.
             </CardDescription>
           </div>
           {isVerified ? (

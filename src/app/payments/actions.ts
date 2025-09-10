@@ -5,6 +5,6 @@
 export async function confirmReceipt(formData: FormData) {
   return {
     error: 'Receipt confirmation not implemented with Supabase yet',
-    success: false
+    success: false,
   };
 }
