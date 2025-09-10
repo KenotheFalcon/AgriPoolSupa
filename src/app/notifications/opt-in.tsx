@@ -8,7 +8,9 @@ import { saveFCMToken } from './actions';
 import { Bell } from 'lucide-react';
 
 export function NotificationOptIn() {
-  const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
+  const [notificationPermission, setNotificationPermission] = useState(
+    typeof window !== 'undefined' && 'Notification' in window ? Notification.permission : 'default'
+  );
   const { toast } = useToast();
 
   useEffect(() => {
@@ -21,28 +23,32 @@ export function NotificationOptIn() {
   }, [toast]);
 
   const handleSubscribe = async () => {
-    if (Notification.permission === 'granted') {
-      toast({ description: 'You are already subscribed to notifications.' });
-      return;
-    }
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'granted') {
+        toast({ description: 'You are already subscribed to notifications.' });
+        return;
+      }
 
-    const permission = await Notification.requestPermission();
-    setNotificationPermission(permission);
+      const permission = await Notification.requestPermission();
+      setNotificationPermission(permission);
 
-    if (permission === 'granted') {
-      const token = await getFCMToken();
-      if (token) {
-        const formData = new FormData();
-        formData.append('token', token);
-        const result = await saveFCMToken(formData);
-        if (result.message) {
-          toast({ title: 'Success', description: result.message });
-        } else if (result.error) {
-          toast({ title: 'Error', description: result.error, variant: 'destructive' });
+      if (permission === 'granted') {
+        const token = await getFCMToken();
+        if (token) {
+          const formData = new FormData();
+          formData.append('token', token);
+          const result = await saveFCMToken(formData);
+          if (result.success) {
+            toast({ title: 'Success', description: 'Notifications enabled successfully' });
+          } else if (result.error) {
+            toast({ title: 'Error', description: result.error, variant: 'destructive' });
+          }
         }
+      } else {
+        toast({ title: 'Info', description: 'Notification permission denied.' });
       }
     } else {
-      toast({ title: 'Info', description: 'Notification permission denied.' });
+      toast({ title: 'Info', description: 'Notifications not supported in this browser.' });
     }
   };
 

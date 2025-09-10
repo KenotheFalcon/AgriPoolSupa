@@ -36,17 +36,17 @@ export default function HomePage() {
           description='Direct from farm to table'
           features={[
             {
-              image: { path: '/images/fresh-produce.jpg', alt: 'Fresh produce' },
+              image: { path: '/images/fresh-produce-green.svg', alt: 'Fresh produce' },
               title: 'Fresh Quality',
               description: 'Get the freshest produce directly from local farmers',
             },
             {
-              image: { path: '/images/fair-prices.jpg', alt: 'Fair prices' },
+              image: { path: '/images/fair-prices-green.svg', alt: 'Fair prices' },
               title: 'Fair Prices',
               description: 'Support farmers and save money with our direct trade model',
             },
             {
-              image: { path: '/images/community.jpg', alt: 'Community' },
+              image: { path: '/images/community.svg', alt: 'Community' },
               title: 'Strong Community',
               description: 'Build connections with farmers and neighbors in your area',
             },

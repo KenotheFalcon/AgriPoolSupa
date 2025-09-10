@@ -1,0 +1,30 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f0fdf4"/>
+  
+  <!-- Vegetable basket -->
+  <ellipse cx="200" cy="220" rx="80" ry="20" fill="#92400e" opacity="0.6"/>
+  <rect x="120" y="180" width="160" height="40" rx="5" fill="#a3a3a3" opacity="0.3"/>
+  
+  <!-- Leafy vegetables -->
+  <ellipse cx="160" cy="160" rx="15" ry="25" fill="#16a34a" transform="rotate(-20 160 160)"/>
+  <ellipse cx="170" cy="155" rx="12" ry="20" fill="#22c55e" transform="rotate(-10 170 155)"/>
+  <ellipse cx="180" cy="150" rx="10" ry="18" fill="#15803d" transform="rotate(15 180 150)"/>
+  
+  <!-- Tomatoes -->
+  <circle cx="220" cy="170" r="12" fill="#dc2626"/>
+  <circle cx="235" cy="165" r="10" fill="#ef4444"/>
+  <circle cx="245" cy="175" r="11" fill="#dc2626"/>
+  
+  <!-- Carrots -->
+  <ellipse cx="140" cy="180" rx="5" ry="20" fill="#f97316" transform="rotate(-45 140 180)"/>
+  <ellipse cx="150" cy="185" rx="4" ry="18" fill="#ea580c" transform="rotate(-30 150 185)"/>
+  
+  <!-- Fresh quality indicators -->
+  <text x="200" y="100" text-anchor="middle" font-family="Arial" font-size="18" fill="#166534" font-weight="bold">Fresh & Natural</text>
+  
+  <!-- Quality sparkles -->
+  <polygon points="100,80 102,85 107,85 103,88 105,93 100,90 95,93 97,88 93,85 98,85" fill="#22c55e"/>
+  <polygon points="300,90 302,95 307,95 303,98 305,103 300,100 295,103 297,98 293,95 298,95" fill="#16a34a"/>
+  <polygon points="150,110 152,115 157,115 153,118 155,123 150,120 145,123 147,118 143,115 148,115" fill="#15803d"/>
+</svg>

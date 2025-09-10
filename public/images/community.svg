@@ -1,0 +1,31 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f0f9f0"/>
+  
+  <!-- Community circles representing diverse people -->
+  <circle cx="120" cy="150" r="25" fill="#22c55e" opacity="0.8"/>
+  <circle cx="200" cy="120" r="25" fill="#16a34a" opacity="0.8"/>
+  <circle cx="280" cy="150" r="25" fill="#15803d" opacity="0.8"/>
+  <circle cx="160" cy="180" r="25" fill="#166534" opacity="0.8"/>
+  <circle cx="240" cy="180" r="25" fill="#14532d" opacity="0.8"/>
+  
+  <!-- Connection lines between community members -->
+  <line x1="120" y1="150" x2="200" y2="120" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+  <line x1="200" y1="120" x2="280" y2="150" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+  <line x1="160" y1="180" x2="240" y2="180" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+  <line x1="120" y1="150" x2="160" y2="180" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+  <line x1="280" y1="150" x2="240" y2="180" stroke="#22c55e" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Central community hub -->
+  <circle cx="200" cy="150" r="8" fill="#065f46"/>
+  
+  <!-- Simple houses representing community -->
+  <rect x="80" y="240" width="30" height="25" fill="#16a34a"/>
+  <polygon points="80,240 95,225 110,240" fill="#14532d"/>
+  
+  <rect x="180" y="240" width="30" height="25" fill="#16a34a"/>
+  <polygon points="180,240 195,225 210,240" fill="#14532d"/>
+  
+  <rect x="280" y="240" width="30" height="25" fill="#16a34a"/>
+  <polygon points="280,240 295,225 310,240" fill="#14532d"/>
+</svg>
