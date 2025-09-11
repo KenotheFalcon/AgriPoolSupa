@@ -82,3 +82,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Design System Utility Classes */
+@layer utilities {
+  .text-neutralDark { color: #212121; }
+  .text-neutralLight { color: #FAFAFA; }
+  .bg-neutralDark { background-color: #212121; }
+  .bg-neutralLight { background-color: #FAFAFA; }
+}
