@@ -18,57 +18,59 @@
 
 @layer base {
   :root {
-    --background: 120 20% 98%;
-    --foreground: 120 10% 15%;
-    --card: 120 30% 97%;
-    --card-foreground: 120 10% 15%;
-    --popover: 120 30% 97%;
-    --popover-foreground: 120 10% 15%;
-    --primary: 120 60% 35%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 120 15% 92%;
-    --secondary-foreground: 120 10% 20%;
-    --muted: 120 15% 94%;
-    --muted-foreground: 120 8% 45%;
-    --accent: 120 40% 88%;
-    --accent-foreground: 120 10% 20%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 120 15% 85%;
-    --input: 120 15% 90%;
-    --ring: 120 60% 35%;
-    --chart-1: 120 70% 45%;
-    --chart-2: 140 50% 40%;
-    --chart-3: 100 45% 35%;
-    --chart-4: 160 55% 42%;
-    --chart-5: 80 60% 50%;
-    --radius: 0.5rem;
+    /* Design System Colors - Light Mode */
+    --background: 0 0% 98%; /* neutralLight #FAFAFA */
+    --foreground: 0 0% 13%; /* neutralDark #212121 */
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 0 0% 13%; /* neutralDark #212121 */
+    --popover: 0 0% 100%; /* white */
+    --popover-foreground: 0 0% 13%; /* neutralDark #212121 */
+    --primary: 122 39% 49%; /* primary #4CAF50 */
+    --primary-foreground: 0 0% 98%; /* white text on primary */
+    --secondary: 45 100% 51%; /* secondary #FFC107 */
+    --secondary-foreground: 0 0% 13%; /* neutralDark #212121 */
+    --muted: 0 0% 96%; /* light gray */
+    --muted-foreground: 0 0% 45%; /* medium gray */
+    --accent: 199 98% 48%; /* accent #03A9F4 */
+    --accent-foreground: 0 0% 98%; /* white text on accent */
+    --destructive: 0 84% 60%; /* error red */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 0 0% 89%; /* light border */
+    --input: 0 0% 89%; /* input background */
+    --ring: 122 39% 49%; /* primary focus ring */
+    --chart-1: 122 39% 49%; /* primary */
+    --chart-2: 199 98% 48%; /* accent */
+    --chart-3: 45 100% 51%; /* secondary */
+    --chart-4: 0 0% 45%; /* neutral */
+    --chart-5: 122 25% 35%; /* darker primary */
+    --radius: 1rem; /* 16px border radius */
   }
   .dark {
-    --background: 120 15% 8%;
-    --foreground: 120 10% 92%;
-    --card: 120 15% 10%;
-    --card-foreground: 120 10% 92%;
-    --popover: 120 15% 10%;
-    --popover-foreground: 120 10% 92%;
-    --primary: 120 50% 60%;
-    --primary-foreground: 120 15% 8%;
-    --secondary: 120 10% 18%;
-    --secondary-foreground: 120 10% 85%;
-    --muted: 120 10% 15%;
-    --muted-foreground: 120 8% 60%;
-    --accent: 120 15% 20%;
-    --accent-foreground: 120 10% 85%;
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 120 10% 22%;
-    --input: 120 10% 22%;
-    --ring: 120 50% 60%;
-    --chart-1: 120 60% 55%;
-    --chart-2: 140 45% 50%;
-    --chart-3: 100 40% 45%;
-    --chart-4: 160 50% 48%;
-    --chart-5: 80 55% 60%;
+    /* Design System Colors - Dark Mode */
+    --background: 0 0% 8%; /* dark background */
+    --foreground: 0 0% 98%; /* light text */
+    --card: 0 0% 10%; /* dark card */
+    --card-foreground: 0 0% 98%; /* light text */
+    --popover: 0 0% 10%; /* dark popover */
+    --popover-foreground: 0 0% 98%; /* light text */
+    --primary: 122 39% 49%; /* keep primary consistent */
+    --primary-foreground: 0 0% 8%; /* dark text on primary */
+    --secondary: 45 100% 51%; /* keep secondary consistent */
+    --secondary-foreground: 0 0% 8%; /* dark text on secondary */
+    --muted: 0 0% 15%; /* dark muted */
+    --muted-foreground: 0 0% 60%; /* light muted text */
+    --accent: 199 98% 48%; /* keep accent consistent */
+    --accent-foreground: 0 0% 8%; /* dark text on accent */
+    --destructive: 0 65% 50%; /* darker destructive */
+    --destructive-foreground: 0 0% 98%; /* white */
+    --border: 0 0% 22%; /* dark border */
+    --input: 0 0% 22%; /* dark input */
+    --ring: 122 39% 49%; /* primary focus ring */
+    --chart-1: 122 39% 49%; /* primary */
+    --chart-2: 199 98% 48%; /* accent */
+    --chart-3: 45 100% 51%; /* secondary */
+    --chart-4: 0 0% 60%; /* light neutral */
+    --chart-5: 122 25% 65%; /* lighter primary for dark mode */
   }
 }
 
