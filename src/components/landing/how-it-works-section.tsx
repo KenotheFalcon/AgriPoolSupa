@@ -1,4 +1,6 @@
-import { Upload, Users, Package } from 'lucide-react';
+import { Upload, Users, Package, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const steps = [
   {
@@ -27,70 +29,130 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className='py-24 bg-white dark:bg-gray-900'>
-      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        {/* Header */}
-        <div className='text-center mb-16'>
-          <h2 className='text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl'>
+    <section 
+      className='py-12 sm:py-16 md:py-20 lg:py-24 bg-background'
+      role='region'
+      aria-labelledby='how-it-works-title'
+    >
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        {/* Section Header - Mobile First */}
+        <div className='text-center mb-12 lg:mb-16'>
+          <h2 
+            id='how-it-works-title'
+            className='text-2xl font-bold text-foreground mb-4
+                       sm:text-3xl sm:mb-6
+                       md:text-4xl
+                       lg:text-4xl
+                       leading-tight tracking-tight'
+          >
             How AgriPool Works
           </h2>
-          <p className='mt-4 text-lg text-gray-600 dark:text-gray-300'>
+          <p className='text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto
+                       sm:text-lg
+                       md:text-xl'>
             Our simple 3-step process makes buying and selling fresh produce effortless
           </p>
         </div>
 
-        {/* Steps */}
-        <div className='grid grid-cols-1 gap-12 lg:grid-cols-3'>
+        {/* Steps Grid - Mobile First Responsive */}
+        <div className='grid gap-8 
+                       sm:gap-12
+                       lg:grid-cols-3 lg:gap-8'>
           {steps.map((step, index) => (
-            <div key={step.title} className='relative'>
-              {/* Step Number */}
-              <div className='absolute -top-4 -left-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-600 text-white font-bold text-lg'>
+            <div key={step.title} className='relative group'>
+              {/* Step Number Badge */}
+              <div className='absolute -top-3 -left-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold text-base
+                             sm:h-12 sm:w-12 sm:text-lg'>
                 {index + 1}
               </div>
 
-              {/* Step Content */}
-              <div className='relative rounded-2xl bg-gradient-to-br from-green-50 to-blue-50 p-8 dark:from-green-950/50 dark:to-blue-950/50 border border-green-100 dark:border-green-800'>
-                <div className='mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-green-600 text-white'>
-                  <step.icon className='h-8 w-8' />
+              {/* Step Card */}
+              <div className='relative rounded-lg bg-card border border-border p-6 hover:shadow-lg transition-all duration-300 group-hover:-translate-y-1
+                             sm:p-8
+                             sm:rounded-xl'>
+                {/* Step Icon */}
+                <div className='mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-primary-foreground
+                               sm:h-16 sm:w-16 
+                               group-hover:scale-110 transition-transform duration-300'>
+                  <step.icon className='h-7 w-7 sm:h-8 sm:w-8' aria-hidden='true' />
                 </div>
 
-                <h3 className='mb-4 text-2xl font-bold text-gray-900 dark:text-white'>
+                {/* Step Title */}
+                <h3 className='mb-4 text-xl font-bold text-foreground
+                              sm:text-2xl
+                              group-hover:text-primary transition-colors duration-300'>
                   {step.title}
                 </h3>
 
-                <p className='mb-4 text-gray-600 dark:text-gray-300'>{step.description}</p>
+                {/* Step Description */}
+                <p className='mb-4 text-sm text-muted-foreground leading-relaxed
+                              sm:text-base'>
+                  {step.description}
+                </p>
 
-                <p className='text-sm text-gray-500 dark:text-gray-400'>{step.details}</p>
+                {/* Step Details */}
+                <p className='text-xs text-muted-foreground/80 leading-relaxed
+                              sm:text-sm'>
+                  {step.details}
+                </p>
               </div>
 
-              {/* Connector Line */}
+              {/* Connector Arrow - Desktop Only */}
               {index < steps.length - 1 && (
-                <div className='absolute top-1/2 -right-6 hidden h-0.5 w-12 bg-gradient-to-r from-green-600 to-blue-600 lg:block' />
+                <div className='absolute top-1/2 -right-4 z-0 hidden lg:flex items-center justify-center'>
+                  <ArrowRight className='h-8 w-8 text-primary/40' aria-hidden='true' />
+                </div>
+              )}
+              
+              {/* Connector for Mobile - Vertical */}
+              {index < steps.length - 1 && (
+                <div className='flex justify-center my-8 lg:hidden'>
+                  <div className='h-8 w-0.5 bg-gradient-to-b from-primary to-accent'></div>
+                </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <div className='mt-16 text-center'>
-          <div className='rounded-2xl bg-gradient-to-r from-green-600 to-blue-600 p-8 text-white'>
-            <h3 className='text-2xl font-bold mb-4'>Ready to Get Started?</h3>
-            <p className='text-green-100 mb-6'>
-              Join thousands of farmers and consumers who are already benefiting from our platform
-            </p>
-            <div className='flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 justify-center'>
-              <a
-                href='/auth/signup?role=buyer'
-                className='inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-green-700 font-semibold hover:bg-green-50 transition-colors'
-              >
-                Start Buying
-              </a>
-              <a
-                href='/auth/signup?role=farmer'
-                className='inline-flex items-center justify-center rounded-lg border-2 border-white px-6 py-3 text-white font-semibold hover:bg-white hover:text-green-700 transition-colors'
-              >
-                Start Selling
-              </a>
+        {/* Call to Action Section */}
+        <div className='mt-16 lg:mt-20'>
+          <div className='rounded-xl bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground
+                         sm:p-8 sm:rounded-2xl'>
+            <div className='text-center'>
+              <h3 className='text-xl font-bold mb-4 sm:text-2xl'>
+                Ready to Get Started?
+              </h3>
+              <p className='text-primary-foreground/90 mb-6 text-sm leading-relaxed max-w-2xl mx-auto
+                           sm:text-base'>
+                Join thousands of farmers and consumers who are already benefiting from our platform
+              </p>
+              
+              {/* CTA Buttons - Mobile First */}
+              <div className='flex flex-col space-y-3 
+                             sm:flex-row sm:space-y-0 sm:space-x-4 sm:justify-center'>
+                <Button 
+                  asChild 
+                  variant='secondary'
+                  size='lg'
+                  className='bg-white text-primary hover:bg-white/90 font-semibold px-6 py-3
+                            sm:px-8 sm:py-4'
+                >
+                  <Link href='/auth/signup?role=buyer'>
+                    Start Buying
+                  </Link>
+                </Button>
+                <Button 
+                  asChild 
+                  variant='outline'
+                  size='lg'
+                  className='border-white/30 text-white hover:bg-white/10 hover:border-white/50 font-semibold px-6 py-3
+                            sm:px-8 sm:py-4'
+                >
+                  <Link href='/auth/signup?role=farmer'>
+                    Start Selling
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>

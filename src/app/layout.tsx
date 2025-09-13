@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-// import { Inter as FontSans } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import Navbar from '@/components/layout/navbar';
@@ -60,11 +60,12 @@ export const metadata: Metadata = {
   },
 };
 
-// Temporarily disable Google Font due to network restrictions
-// const fontSans = FontSans({
-//   subsets: ['latin'],
-//   variable: '--font-sans',
-// });
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -78,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel='icon' href='/icons/icon-192x192.png' />
         <link rel='apple-touch-icon' href='/icons/icon-192x192.png' />
       </head>
-      <body className={cn('min-h-screen bg-background font-sans antialiased')}>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', poppins.variable)}>
         <AuthProvider>
           <ThemeProvider
             attribute='class'

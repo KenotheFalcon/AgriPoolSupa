@@ -18,15 +18,51 @@ const config: Config = {
       '2xl': '1536px',
     },
     extend: {
+      // Design system typography
+      fontFamily: {
+        sans: ['var(--font-poppins)', 'Poppins', 'sans-serif'],
+      },
+      // Design system spacing (8px base units)
+      spacing: {
+        '0': '0',
+        '0.5': '4px',   // 0.5 * 8px
+        '1': '8px',     // 1 * 8px  
+        '2': '16px',    // 2 * 8px
+        '3': '24px',    // 3 * 8px
+        '4': '32px',    // 4 * 8px
+        '6': '48px',    // 6 * 8px
+        '8': '64px',    // 8 * 8px
+        '18': '4.5rem',
+        '88': '22rem',
+      },
+      // Design system border radius
+      borderRadius: {
+        'none': '0',
+        'sm': '4px',
+        'DEFAULT': '16px',  // Design system default
+        'md': '16px',
+        'lg': '16px',
+        'xl': '20px',
+        '2xl': '24px',
+        '3xl': '32px',
+        'full': '9999px',
+      },
       // Accessibility-focused color contrast ratios
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+      // Accessibility enhancements
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1.5' }],
+        'sm': ['0.875rem', { lineHeight: '1.5' }],
+        'base': ['1rem', { lineHeight: '1.6' }],
+        'lg': ['1.125rem', { lineHeight: '1.6' }],
+        'xl': ['1.25rem', { lineHeight: '1.6' }],
+        '2xl': ['1.5rem', { lineHeight: '1.4' }],
+        '3xl': ['1.875rem', { lineHeight: '1.3' }],
+        '4xl': ['2.25rem', { lineHeight: '1.2' }],
+        '5xl': ['3rem', { lineHeight: '1.1' }],
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -69,22 +105,6 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
-      },
-      // Accessibility enhancements
-      fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1.5' }],
-        'sm': ['0.875rem', { lineHeight: '1.5' }],
-        'base': ['1rem', { lineHeight: '1.6' }],
-        'lg': ['1.125rem', { lineHeight: '1.6' }],
-        'xl': ['1.25rem', { lineHeight: '1.6' }],
-        '2xl': ['1.5rem', { lineHeight: '1.4' }],
-        '3xl': ['1.875rem', { lineHeight: '1.3' }],
-        '4xl': ['2.25rem', { lineHeight: '1.2' }],
-        '5xl': ['3rem', { lineHeight: '1.1' }],
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
       },
       keyframes: {
         'accordion-down': {
